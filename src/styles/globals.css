@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Texture de bruit */
+.bg-noise {
+  background-image: url('/images/noise.png');
+}
+
+/* Animation de fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+/* Soulignement animé */
+.nav-item::after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #00e5ff;
+  transition: width 0.3s;
+}
+
+.nav-item:hover::after {
+  width: 100%;
+}
+/* Animation de transition pour les boutons */
+button {
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Changement de couleur fluide */
+  button:hover {
+    color: #00e5ff;
+  }
+  
+  /* Icône animée au hover */
+  button span:first-child {
+    transition: transform 0.3s ease;
+  }
+  
+  button:hover span:first-child {
+    transform: scale(1.2);
+  }
+  /* Effet de survol sur les icônes */
+button:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Animation d'apparition */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Ajout d'animation spécifique */
+  .animate-fade-in-up {
+    animation: fadeInUp 1s ease-out;
+  }
+  
