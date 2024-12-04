@@ -1,119 +1,77 @@
-// components/Apropos.tsx
-import { motion } from 'framer-motion';
-import { FaReact, FaHtml5, FaCss3Alt, FaNodeJs } from 'react-icons/fa';
+import React from 'react';
+import { ProfileData } from '@/types/portfolio';
+import ProfileSection from './Profilesection';
 
-export default function Apropos() {
+const Apropos: React.FC = () => {
+  // Exemple de données de profil
+  const profileData: ProfileData = {
+    name: "Jean Dupont",
+    country: "Nevers, France",
+    title: "Développeur Web Full-Stack",
+    about: "Passionné par le développement web et les nouvelles technologies, je combine créativité et expertise technique pour créer des solutions digitales innovantes. Mon objectif est de développer des applications web performantes et intuitives qui répondent aux besoins concrets des utilisateurs.",
+    
+    // Données des langues parlées
+    languages: [
+      { name: "Français", level: "Courant" },
+      { name: "Anglais", level: "Intermédiaire" },
+      { name: "Espagnol", level: "Débutant" }
+    ],
+    
+    // Expériences professionnelles
+    experiences: [
+      {
+        company: "TechInnovate Solutions",
+        position: "Développeur Web Senior",
+        period: "Janvier 2022 - Présent",
+        description: "Développement d'applications web full-stack, architecture de solutions cloud, mise en place de microservices et optimisation des performances."
+      },
+      {
+        company: "WebCréa Agency",
+        position: "Développeur Front-end",
+        period: "Juin 2019 - Décembre 2021",
+        description: "Création d'interfaces utilisateur réactives, intégration de designs complexes, travail sur des projets variés pour différents clients."
+      },
+      {
+        company: "StartUp Digital",
+        position: "Développeur Junior",
+        period: "Septembre 2017 - Mai 2019",
+        description: "Première expérience professionnelle, apprentissage des meilleures pratiques de développement web, contribution à des projets innovants."
+      }
+    ],
+    
+    // Formations
+    education: [
+      {
+        institution: "École Supérieure d'Informatique",
+        degree: "Master en Développement Web",
+        period: "2015 - 2017"
+      },
+      {
+        institution: "Université de Technologie",
+        degree: "Licence en Informatique",
+        period: "2012 - 2015"
+      },
+      {
+        institution: "Lycée Technique",
+        degree: "Baccalauréat Scientifique",
+        period: "2009 - 2012"
+      }
+    ]
+  };
+
   return (
-    <section id="à propos" className="py-20 bg-gray-800 text-white">
-      <div className="container mx-auto flex flex-col lg:flex-row items-center justify-between gap-16 px-6">
-        {/* Section image */}
-        <motion.div
-          className="lg:w-1/3 w-full rounded-full overflow-hidden"
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-        >
-            <img
-                src="/images/profile.jpg"
-                alt="Photo de profil"
-                className="w-full h-full object-cover"
-            />
-        </motion.div>
-
-        {/* Section texte */}
-        <motion.div
-          className="lg:w-2/3 w-full text-center lg:text-left"
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <h2 className="text-4xl font-extrabold text-cyan-400 mb-6">À propos de moi</h2>
-          <p className="text-lg text-gray-300 mb-6">
-            Développeur web passionné, créatif, et orienté résultats. J'aime créer des expériences utilisateurs
-            modernes et performantes. Mon objectif est de construire des solutions innovantes qui allient technologie
-            et design.
-          </p>
-          <p className="text-lg text-gray-300 mb-8">
-            Mon expertise repose sur une connaissance approfondie des technologies front-end et back-end, combinée à
-            une expérience pratique dans des projets complexes et divers.
-          </p>
-
-          {/* Section compétences */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
-            {/* Compétence React */}
-            <motion.div
-              className="flex flex-col items-center"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="text-4xl text-cyan-400 mb-3">
-                <FaReact />
-              </div>
-              <h3 className="font-bold text-xl text-white">React</h3>
-              <motion.div
-                className="w-24 h-1 bg-cyan-400 mt-2"
-                initial={{ width: 0 }}
-                animate={{ width: '90%' }}
-                transition={{ duration: 1.2 }}
-              ></motion.div>
-            </motion.div>
-
-            {/* Compétence HTML */}
-            <motion.div
-              className="flex flex-col items-center"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="text-4xl text-orange-500 mb-3">
-                <FaHtml5 />
-              </div>
-              <h3 className="font-bold text-xl text-white">HTML5</h3>
-              <motion.div
-                className="w-24 h-1 bg-orange-500 mt-2"
-                initial={{ width: 0 }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 1.2 }}
-              ></motion.div>
-            </motion.div>
-
-            {/* Compétence CSS */}
-            <motion.div
-              className="flex flex-col items-center"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="text-4xl text-blue-500 mb-3">
-                <FaCss3Alt />
-              </div>
-              <h3 className="font-bold text-xl text-white">CSS3</h3>
-              <motion.div
-                className="w-24 h-1 bg-blue-500 mt-2"
-                initial={{ width: 0 }}
-                animate={{ width: '85%' }}
-                transition={{ duration: 1.2 }}
-              ></motion.div>
-            </motion.div>
-
-            {/* Compétence Node.js */}
-            <motion.div
-              className="flex flex-col items-center"
-              whileHover={{ scale: 1.1 }}
-              transition={{ duration: 0.3 }}
-            >
-              <div className="text-4xl text-green-500 mb-3">
-                <FaNodeJs />
-              </div>
-              <h3 className="font-bold text-xl text-white">Node.js</h3>
-              <motion.div
-                className="w-24 h-1 bg-green-500 mt-2"
-                initial={{ width: 0 }}
-                animate={{ width: '80%' }}
-                transition={{ duration: 1.2 }}
-              ></motion.div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </div>
-    </section>
+    <div className="bg-gray-50 min-h-screen py-12 px-4 sm:px-6 lg:px-8">
+      <ProfileSection 
+        name={profileData.name}
+        country={profileData.country}
+        title={profileData.title}
+        about={profileData.about}
+        languages={profileData.languages}
+        experiences={profileData.experiences}
+        education={profileData.education}
+      />
+    </div>
   );
-}
+};
+
+export default Apropos;
