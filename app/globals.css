@@ -92,3 +92,12 @@ body {
     @apply bg-background text-foreground;
   }
 }
+.form-message {
+  @apply mt-2 text-sm font-medium text-orange-500 dark:text-orange-300;
+  @apply animate-in fade-in-50 slide-in-from-bottom-1;
+}
+
+/* Style pour les inputs en erreur */
+.input-error {
+  @apply border-orange-500 dark:border-orange-300 focus-visible:ring-orange-500 dark:focus-visible:ring-orange-300;
+}

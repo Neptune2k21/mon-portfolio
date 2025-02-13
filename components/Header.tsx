@@ -2,15 +2,15 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { useTheme } from "next-themes"
-import { Moon, Sun } from "lucide-react"
+import { Moon, Sun, Menu, X } from "lucide-react"
 
 const navItems = [
-  { name: "À propos", href: "#" },
+  { name: "Accueil", href: "#" },
+  { name: "À propos", href: "#about" },
   { name: "Projets", href: "#projects" },
-  { name: "Éducation", href: "#education" },
   { name: "Compétences", href: "#skills" },
   { name: "Contact", href: "#contact" },
 ]
@@ -18,6 +18,7 @@ const navItems = [
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const { theme, setTheme } = useTheme()
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,6 +27,10 @@ export default function Header() {
     window.addEventListener("scroll", handleScroll)
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
 
   return (
     <motion.header
@@ -37,13 +42,10 @@ export default function Header() {
       transition={{ duration: 0.5 }}
     >
       <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
-        {/* Logo à gauche */}
         <Link href="#" className="text-2xl font-bold text-neutral-900 dark:text-white">
-          Cisse Mamadou
+          CM
         </Link>
-        
-        {/* Navigation au centre */}
-        <ul className="hidden md:flex space-x-4 absolute left-1/2 transform -translate-x-1/2">
+        <ul className="hidden md:flex space-x-4">
           {navItems.map((item) => (
             <li key={item.name}>
               <Link href={item.href}>
@@ -52,32 +54,45 @@ export default function Header() {
             </li>
           ))}
         </ul>
-        
-        {/* Menu mobile et thème à droite */}
-        <div className="flex items-center gap-2">
-          <Button
-            variant="outline"
-            size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          >
+        <div className="flex items-center space-x-4">
+          <Button variant="outline" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
             <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
             <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+            <span className="sr-only">Toggle theme</span>
           </Button>
-          
-          <Button className="md:hidden" variant="outline" size="icon">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
+          <Button className="hidden md:inline-flex">Mon CV</Button>
+          <Button className="md:hidden" variant="outline" size="icon" onClick={toggleMobileMenu}>
+            {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
         </div>
       </nav>
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
+            className="md:hidden bg-white dark:bg-neutral-900"
+          >
+            <ul className="py-4">
+              {navItems.map((item) => (
+                <li key={item.name} className="px-4 py-2">
+                  <Link href={item.href} onClick={() => setIsMobileMenuOpen(false)}>
+                    <Button variant="ghost" className="w-full justify-start">
+                      {item.name}
+                    </Button>
+                  </Link>
+                </li>
+              ))}
+              <li className="px-4 py-2">
+                <Button className="w-full">Resume</Button>
+              </li>
+            </ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   )
 }
+

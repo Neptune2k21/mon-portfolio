@@ -21,6 +21,7 @@ const nextConfig = {
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
+  transpilePackages: ['framer-motion'],
 }
 
 mergeConfig(nextConfig, userConfig)
