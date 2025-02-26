@@ -1,28 +1,24 @@
-import { ThemeProvider } from "@/components/ThemeProvider"
-import { GeistSans } from "geist/font/sans"
-import Header from "@/components/Header"
-import Footer from "@/components/Footer"
 import type React from "react"
-import { Toaster} from "sonner"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
 
-import "@/styles/globals.css"
+const inter = Inter({ subsets: ["latin"] })
+
+export const metadata: Metadata = {
+  title: "CisseMamadou Portfolio",
+  description: "Frontend Developer Portfolio",
+    generator: 'v0.dev'
+}
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode
-}) {
+}>) {
   return (
-    <html lang="fr" suppressHydrationWarning className={GeistSans.className}>
-      <head />
-      <body>
-        <Toaster theme="system"/>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false} disableTransitionOnChange>
-          <Header />
-          <main className="pt-16">{children}</main>
-          <Footer />
-        </ThemeProvider>
-      </body>
+    <html lang="en">
+      <body className={inter.className}>{children}</body>
     </html>
   )
 }
@@ -30,4 +26,3 @@ export default function RootLayout({
 
 
 import './globals.css'
-
