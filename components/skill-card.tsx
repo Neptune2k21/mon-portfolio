@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Icon } from '@iconify/react';
 import { useState } from 'react';
 import { Tab } from '@headlessui/react';
+import { useEffect } from 'react';
 
 interface Skill {
   name: string;
@@ -9,7 +10,7 @@ interface Skill {
   level: number;
   description: string;
 }
-type SkillCategory = "all" | "frontend" | "backend" | "design" | "devops" | "software";
+type SkillCategory = "all" | "frontend" | "backend" | "</Tab.Group>design" | "devops" | "software";
 
 const skillCategories = [
   { id: "all", name: "Tout", icon: "carbon:viewport" },
@@ -159,7 +160,6 @@ const OtherSkills= [
 
 
 
-
 export default function SkillsSection() {
   const [selectedCategory, setSelectedCategory] = useState("current");
   const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
@@ -172,10 +172,11 @@ export default function SkillsSection() {
     { id: "learning", name: "En Apprentissage", icon: "carbon:education" },
     { id: "other", name: "Autres Compétences", icon: "carbon:user-profile" },
   ];
+  
   const filterSkills = (skills: any[], selectedTab: string) => {
     // Si on est dans "Autres Compétences", ignorer le filtre
     if (selectedTab === "other") {
-      return [...languages, ...OtherSkills , ...softSkills];
+      return [...languages, ...OtherSkills, ...softSkills];
     }
   
     // Récupérer le bon tableau de skills selon l'onglet
@@ -193,6 +194,7 @@ export default function SkillsSection() {
   
     return filteredSkills;
   };
+  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -215,8 +217,20 @@ export default function SkillsSection() {
     }
   };
 
+  // Close filter dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = () => {
+      if (isFilterOpen) setIsFilterOpen(false);
+    };
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isFilterOpen]);
+
   return (
-    <section id="skills" className="py-32 bg-white relative overflow-hidden">
+    <section id="skills" className="py-16 md:py-24 lg:py-32 bg-white relative overflow-hidden">
       {/* Arrière-plan animé */}
       <motion.div 
         className="absolute inset-0 -z-10"
@@ -235,22 +249,22 @@ export default function SkillsSection() {
         }}
       />
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 sm:px-6">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-20"
+          className="text-center mb-12 md:mb-20"
         >
           <span className="text-sm font-bold tracking-wider text-gray-500 uppercase">
             Mon expertise
           </span>
-          <h2 className="text-6xl font-bold mt-4">
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mt-4">
             Compétences &{" "}
             <span className="relative inline-block">
               Technologies
               <motion.div
-                className="absolute bottom-0 left-0 h-3 bg-black/10 w-full -z-10"
+                className="absolute bottom-0 left-0 h-2 md:h-3 bg-black/10 w-full -z-10"
                 initial={{ width: 0 }}
                 whileInView={{ width: "100%" }}
                 transition={{ delay: 0.5, duration: 0.8 }}
@@ -259,15 +273,15 @@ export default function SkillsSection() {
           </h2>
         </motion.div>
 
-        {/* Contrôles de vue */}
-        <div className="flex justify-between items-center mb-8">
+        {/* Contrôles de vue - version responsive */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <Tab.Group>
-            <Tab.List className="flex gap-4 p-1 bg-gray-100 rounded-xl">
+            <Tab.List className="flex flex-wrap gap-2 p-1 bg-gray-100 rounded-xl w-full sm:w-auto">
               {categories.map((category) => (
                 <Tab
                   key={category.id}
                   className={({ selected }) =>
-                    `px-6 py-3 rounded-lg font-medium transition-all ${
+                    `px-3 sm:px-4 md:px-6 py-2 sm:py-3 rounded-lg font-medium transition-all text-sm sm:text-base ${
                       selected 
                         ? "bg-black text-white shadow-lg" 
                         : "text-gray-600 hover:bg-gray-200"
@@ -275,29 +289,32 @@ export default function SkillsSection() {
                   }
                   onClick={() => setSelectedCategory(category.id)}
                 >
-                  <div className="flex items-center gap-2">
-                    <Icon icon={category.icon} className="w-5 h-5" />
-                    {category.name}
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Icon icon={category.icon} className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <span className="whitespace-nowrap">{category.name}</span>
                   </div>
                 </Tab>
               ))}
             </Tab.List>
           </Tab.Group>
 
-          <div className="flex items-center gap-3 relative">
+          <div className="flex items-center gap-2 sm:gap-3 relative self-end sm:self-auto">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsFilterOpen(!isFilterOpen);
+              }}
               className={`
-                p-2 rounded-lg transition-colors flex items-center gap-2
+                p-2 rounded-lg transition-colors flex items-center gap-1 sm:gap-2 text-sm sm:text-base
                 ${isFilterOpen || activeFilter !== 'all' 
                   ? "bg-black text-white" 
                   : "bg-gray-100 hover:bg-gray-200 text-gray-600"}
               `}
             >
-              <Icon icon="carbon:filter" className="w-6 h-6" />
-              <span className="hidden md:inline">
+              <Icon icon="carbon:filter" className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="hidden sm:inline">
                 {activeFilter === 'all' ? 'Filtrer' : skillCategories.find(cat => cat.id === activeFilter)?.name}
               </span>
             </motion.button>
@@ -310,7 +327,7 @@ export default function SkillsSection() {
             >
               <Icon 
                 icon={isGridView ? "carbon:list" : "carbon:grid"} 
-                className="w-6 h-6" 
+                className="w-5 h-5 sm:w-6 sm:h-6" 
               />
             </motion.button>
 
@@ -322,8 +339,9 @@ export default function SkillsSection() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 10 }}
                   className="absolute right-0 top-full mt-2 p-2 bg-white rounded-xl shadow-xl border border-gray-200 z-50"
+                  onClick={(e) => e.stopPropagation()}
                 >
-                  <div className="grid grid-cols-2 gap-2 min-w-[200px]">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 min-w-[180px] sm:min-w-[200px]">
                     {skillCategories.map((category) => (
                       <motion.button
                         key={category.id}
@@ -334,7 +352,7 @@ export default function SkillsSection() {
                           setIsFilterOpen(false);
                         }}
                         className={`
-                          px-3 py-2 rounded-lg font-medium transition-all flex items-center gap-2
+                          px-3 py-2 rounded-lg font-medium transition-all flex items-center gap-2 text-sm
                           ${activeFilter === category.id 
                             ? "bg-black text-white shadow-lg" 
                             : "text-gray-600 hover:bg-gray-100"}
@@ -358,9 +376,9 @@ export default function SkillsSection() {
             initial="hidden"
             animate="visible"
             exit="hidden"
-            className={`grid gap-6 ${
+            className={`grid gap-4 sm:gap-6 ${
               isGridView 
-                ? "grid-cols-1 md:grid-cols-3" 
+                ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" 
                 : "grid-cols-1"
             }`}
           >
@@ -375,17 +393,22 @@ export default function SkillsSection() {
                 return (
                   <motion.div 
                     variants={skillCardVariants}
-                    className="col-span-full min-h-[400px] bg-white/50 backdrop-blur-sm rounded-2xl border-2 border-dashed border-black/20 p-12 text-center flex flex-col items-center justify-center"
+                    className="col-span-full min-h-[300px] sm:min-h-[400px] bg-white/50 backdrop-blur-sm rounded-2xl border-2 border-dashed border-black/20 p-6 sm:p-12 text-center flex flex-col items-center justify-center"
                   >
                     <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", duration: 0.5 }}>
-                      <Icon icon="carbon:filter-remove" className="w-20 h-20 mx-auto text-black/40 mb-6" />
-                      <h3 className="text-3xl font-bold mb-3 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                      <Icon icon="carbon:filter-remove" className="w-16 h-16 sm:w-20 sm:h-20 mx-auto text-black/40 mb-4 sm:mb-6" />
+                      <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                         Filtrage Non Disponible
                       </h3>
-                      <p className="text-gray-600 max-w-md mx-auto mb-6">
+                      <p className="text-gray-600 max-w-md mx-auto mb-4 sm:mb-6 text-sm sm:text-base">
                         Cette section présente mes compétences générales et linguistiques, qui ne sont pas catégorisées.
                       </p>
-                      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setActiveFilter("all")} className="px-6 py-2 bg-black text-white rounded-lg hover:bg-black/90 transition-colors shadow-lg">
+                      <motion.button 
+                        whileHover={{ scale: 1.05 }} 
+                        whileTap={{ scale: 0.95 }} 
+                        onClick={() => setActiveFilter("all")} 
+                        className="px-4 sm:px-6 py-2 text-sm sm:text-base bg-black text-white rounded-lg hover:bg-black/90 transition-colors shadow-lg"
+                      >
                         <div className="flex items-center gap-2">
                           <Icon icon="carbon:view-all" />
                           <span>Voir tout</span>
@@ -400,20 +423,30 @@ export default function SkillsSection() {
                 return (
                   <motion.div 
                     variants={skillCardVariants}
-                    className="col-span-full min-h-[400px] bg-white rounded-2xl border-2 border-black/20 p-12 text-center flex flex-col items-center justify-center"
+                    className="col-span-full min-h-[300px] sm:min-h-[400px] bg-white rounded-2xl border-2 border-black/20 p-6 sm:p-12 text-center flex flex-col items-center justify-center"
                   >
                     <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ type: "spring", duration: 0.5 }}>
-                      <div className="relative inline-block mb-6">
-                        <Icon icon="carbon:search" className="w-20 h-20 text-black/40" />
-                        <motion.div initial={{ rotate: 0 }} animate={{ rotate: 360 }} transition={{ duration: 20, repeat: Infinity, ease: "linear" }} className="absolute inset-0 border-4 border-dashed border-black/10 rounded-full" />
+                      <div className="relative inline-block mb-4 sm:mb-6">
+                        <Icon icon="carbon:search" className="w-16 h-16 sm:w-20 sm:h-20 text-black/40" />
+                        <motion.div 
+                          initial={{ rotate: 0 }} 
+                          animate={{ rotate: 360 }} 
+                          transition={{ duration: 20, repeat: Infinity, ease: "linear" }} 
+                          className="absolute inset-0 border-4 border-dashed border-black/10 rounded-full" 
+                        />
                       </div>
-                      <h3 className="text-3xl font-bold mb-3 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
+                      <h3 className="text-2xl sm:text-3xl font-bold mb-2 sm:mb-3 bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent">
                         {selectedCategory === "current" ? "Explorer de Nouveaux Horizons" : "En Cours d'Apprentissage"}
                       </h3>
-                      <p className="text-gray-600 max-w-md mx-auto mb-6">
+                      <p className="text-gray-600 max-w-md mx-auto mb-4 sm:mb-6 text-sm sm:text-base">
                         {selectedCategory === "current" ? "Je n'ai pas encore de compétences dans cette catégorie, mais j'apprends constamment !" : `Je suis en train d'explorer les technologies ${skillCategories.find(cat => cat.id === activeFilter)?.name.toLowerCase()}.`}
                       </p>
-                      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setActiveFilter("all")} className="px-6 py-2 bg-black text-white rounded-lg hover:bg-black/90 transition-colors shadow-lg">
+                      <motion.button 
+                        whileHover={{ scale: 1.05 }} 
+                        whileTap={{ scale: 0.95 }} 
+                        onClick={() => setActiveFilter("all")} 
+                        className="px-4 sm:px-6 py-2 text-sm sm:text-base bg-black text-white rounded-lg hover:bg-black/90 transition-colors shadow-lg"
+                      >
                         <div className="flex items-center gap-2">
                           <Icon icon="carbon:view-all" />
                           <span>Voir toutes les compétences</span>
@@ -432,22 +465,27 @@ export default function SkillsSection() {
                   onHoverStart={() => setHoveredSkill(skill.name)}
                   onHoverEnd={() => setHoveredSkill(null)}
                   className={`
-                    p-6 rounded-xl border-2 
+                    p-4 sm:p-6 rounded-xl border-2 
                     ${hoveredSkill === skill.name ? "border-black shadow-2xl" : "border-black/50"}
                     bg-white transition-all
-                    ${isGridView ? "" : "flex items-center gap-8"}
+                    ${isGridView ? "" : "flex items-center gap-4 sm:gap-8"}
                   `}
                 >
-                  <div className={`flex items-center gap-4 mb-4 ${isGridView ? "" : "flex-1"}`}>
+                  <div className={`flex items-center gap-3 sm:gap-4 ${isGridView ? "mb-2 sm:mb-4" : "flex-1"}`}>
                     <div className="relative">
-                      <Icon icon={skill.icon || skill.flag} className="w-8 h-8" />
+                      <Icon icon={skill.icon || skill.flag} className="w-6 h-6 sm:w-8 sm:h-8" />
                       {hoveredSkill === skill.name && (
-                        <motion.div className="absolute -bottom-1 -right-1 w-3 h-3 bg-green-400 rounded-full" initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ duration: 0.2 }} />
+                        <motion.div 
+                          className="absolute -bottom-1 -right-1 w-2 h-2 sm:w-3 sm:h-3 bg-green-400 rounded-full" 
+                          initial={{ scale: 0 }} 
+                          animate={{ scale: 1 }} 
+                          transition={{ duration: 0.2 }} 
+                        />
                       )}
                     </div>
                     <div>
-                      <h4 className="font-bold">{skill.name}</h4>
-                      <p className="text-sm text-gray-600">{skill.description || skill.level}</p>
+                      <h4 className="font-bold text-sm sm:text-base">{skill.name}</h4>
+                      <p className="text-xs sm:text-sm text-gray-600">{skill.description || skill.level}</p>
                     </div>
                   </div>
                 </motion.div>
