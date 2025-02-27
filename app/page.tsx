@@ -5,16 +5,17 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Github, Twitter, Facebook, Linkedin } from "lucide-react"
 import { Icon } from '@iconify/react'
-import ProjectCard from "@/components/project-card"
 import { motion } from "framer-motion"
-import SkillCard from "@/components/skill-card"
-import ExperienceCard from "@/components/experience-card"
 import { useEffect } from "react"
 import gsap from "gsap"
 import { ScrollTrigger, } from "gsap/ScrollTrigger"
 import { ScrollToPlugin } from "gsap/ScrollToPlugin"
 import { useState } from "react"
+import {useForm} from "react-hook-form"
+import {zodResolver} from "@hookform/resolvers/zod"
+import { ContactFormValues, contactFormSchema } from "@/app/types/contact"
 import SkillsSection from "@/components/skill-card"
+import {Toast} from "@/components/ui/toast"
 
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(ScrollToPlugin);
@@ -35,32 +36,225 @@ const item = {
 
 
 export default function Home() {
-  const projects = [
-    {
-      title: "Quizzine",
-      category: "01 / FULLSTACK",
-      description: "Une plateforme moderne permettant aux utilisateurs de créer et partager des quiz interactifs.",
-      image: "/quizzine.png",
-      href: "https://github.com/BUSCH-Leo/SAE-S3-2024-2025-site-de-quizz",
-      technologies: ["Next.js", "TypeScript", "Tailwind CSS"],
-    },
-    {
-      title: "Cookie Clicker",
-      category: "02 / DESKTOP",
-      description: "Application WPF interactive inspirée du célèbre jeu Cookie Clicker.",
-      image: "/cookieClicker.png",
-      href: "https://github.com/4keezix/SAE_DEV_CookieClicker",
-      technologies: ["C#", "WPF"],
-    },
-    {
-      title: "Dungeon Forge",
-      category: "03 / GAME DEV",
-      description: "Générateur procédural de donjons combinant des algorithmes de création de labyrinthes.",
-      image: "/donjon.png",
-      href: "https://github.com/Neptune2k21/BUT1-S2.02",
-      technologies: ["Unity", "C#", "Algorithmes"],
-    },
-  ];
+  const ProjectSection = () => {
+    const projects = [
+      {
+        id: "featured",
+        title: "Quizzine",
+        tag: "Projet Phare",
+        tagColor: "bg-purple-100 text-purple-700",
+        description: "Une plateforme moderne de quiz interactifs construite avec les technologies web JavaScript. Les utilisateurs peuvent créer, partager et participer à des quiz sur divers sujets.",
+        longDesc: "Développé en équipe dans le cadre d'un projet universitaire, Quizzine offre une expérience utilisateur optimisée grâce à une interface intuitive et des fonctionnalités avancées. Il permet notamment la création de quiz en temps réel, l'affichage détaillé des résultats et un système de connexion qui facilite la gestion et la modification de nouveaux projets.",
+        image: "/quizzine.png",
+        tech: ["Node Js", "MongoDb", "Boostrap CSS", "Docker"],
+        github: "https://github.com/BUSCH-Leo/SAE-S3-2024-2025-site-de-quizz",
+        gradient: "from-gray-600 to-gray-700", 
+        features: ["Auth avec Passeport Js", "Base de données relationnelle", "API REST", "Architecture MVC"]
+      },
+      {
+        id: "cookie",
+        title: "Cookie Clicker",
+        tag: "Application Desktop",
+        tagColor: "bg-blue-100 text-blue-700",
+        description: "Application WPF interactive inspirée du célèbre jeu Cookie Clicker, avec des fonctionnalités similaire au vrai jeu.",
+        longDesc: "Un projet personnel qui m'a permis d'explorer le développement d'applications desktop avec WPF et d'implémenter des mécaniques de jeu complexes.",
+        image: "/cookieClicker.png",
+        tech: ["C#", "WPF", "XAML", "SQLite"],
+        github: "https://github.com/4keezix/SAE_DEV_CookieClicker",
+        gradient:"from-gray-800 to-black",
+        features: ["Interface personnalisable", "Système de Back office", "Achievements"]
+      },
+      {
+        id: "dungeon",
+        title: "Dungeon Forge",
+        tag: "Game Dev",
+        tagColor: "bg-emerald-100 text-emerald-700",
+        description: "Générateur procédural de donjons utilisant des algorithmes avancés pour créer des niveaux uniques.",
+        longDesc: "Un projet technique qui combine des algorithmes de génération procédurale pour créer des donjons jouables et équilibrés.",
+        image: "/donjon.png",
+        tech: ["C#", "Algorithmes", "Notion de Graph"],
+        github: "https://github.com/Neptune2k21/BUT1-S2.02",
+        gradient: "from-gray-700 to-gray-800",
+        features: ["Génération procédurale", "Djikistra", "Level Design dynamique"]
+      }
+    ];
+  
+    return (
+      <section id="projects" className="min-h-screen py-32 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+        {/* Background Animation */}
+        <div className="absolute inset-0 -z-10">
+          <motion.div
+            animate={{ 
+              scale: [1, 1.2, 1],
+              rotate: [0, 5, 0],
+            }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            className="absolute top-0 left-0 w-[500px] h-[500px] bg-gradient-to-br from-purple-100/30 to-blue-100/30 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{ scale: [1, 1.3, 1], rotate: [0, -5, 0] }}
+            transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+            className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-gradient-to-tr from-emerald-100/30 to-blue-100/30 rounded-full blur-3xl"
+          />
+        </div>
+  
+        <div className="container mx-auto px-4">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-24"
+          >
+            <span className="text-sm font-bold tracking-wider text-gray-500 uppercase">Portfolio</span>
+            <h2 className="text-5xl md:text-6xl font-bold mt-4 relative inline-block">
+              Mes Projets
+              <motion.div
+                initial={{ width: 0 }}
+                whileInView={{ width: "100%" }}
+                className="absolute -z-10 bottom-0 left-0 h-3 bg-gradient-to-r from-purple-100 to-blue-100"
+              />
+            </h2>
+            <p className="mt-6 text-gray-600 max-w-2xl mx-auto">
+              Une sélection de projets les plus recents , démontrant ma maîtrise des technologies modernes 
+              et ma capacité à réaliser des applications complexes.
+            </p>
+          </motion.div>
+  
+          {/* Projects Grid */}
+          <div className="space-y-32">
+            {projects.map((project) => (
+              <motion.div
+                key={project.id}
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                className="group"
+              >
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                  {/* Image Section */}
+                  <div className="relative">
+                    <div className={`absolute inset-0 bg-gradient-to-r ${project.gradient} rounded-2xl transform rotate-2 group-hover:rotate-3 transition-all duration-300`} />
+                    <div className="relative bg-white p-2 rounded-2xl transform -rotate-2 group-hover:-rotate-3 transition-all duration-300">
+                      <div className="aspect-video rounded-xl overflow-hidden">
+                        <Image
+                          src={project.image}
+                          alt={`${project.title} Preview`}
+                          width={600}
+                          height={400}
+                          className="object-cover group-hover:scale-110 transition-all duration-500"
+                        />
+                      </div>
+                    </div>
+                  </div>
+  
+                  {/* Content Section */}
+                  <div className="space-y-6">
+                    <span className={`inline-block px-3 py-1 rounded-full text-sm font-medium ${project.tagColor}`}>
+                      {project.tag}
+                    </span>
+                    <h3 className="text-3xl font-bold">{project.title}</h3>
+                    <p className="text-gray-600">{project.description}</p>
+                    <p className="text-gray-500 text-sm">{project.longDesc}</p>
+                    
+                    {/* Features List */}
+                    <div className="space-y-3">
+                      <h4 className="font-medium text-gray-900">Fonctionnalités clés:</h4>
+                      <ul className="grid grid-cols-2 gap-2">
+                        {project.features.map((feature) => (
+                          <li key={feature} className="flex items-center gap-2 text-sm text-gray-600">
+                            <Icon icon="lucide:check-circle" className="w-4 h-4 text-green-500" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+  
+                    {/* Technologies */}
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((tech) => (
+                        <span key={tech} className="px-3 py-1 bg-gray-100 rounded-full text-sm font-medium">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+  
+                    {/* CTA */}
+                    <motion.a
+                      href={project.github}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="inline-flex items-center gap-2 px-6 py-3 bg-black text-white rounded-full font-medium hover:bg-gray-900 transition-all"
+                    >
+                      <Github className="w-5 h-5" />
+                      <span>Explorer le projet</span>
+                    </motion.a>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  };
+
+// Dans la section contact...
+const [isSubmitting, setIsSubmitting] = useState(false)
+const [toast, setToast] = useState<{
+  type: "success" | "error"
+  message: string
+} | null>(null)
+
+const form = useForm<ContactFormValues>({
+  resolver: zodResolver(contactFormSchema),
+  defaultValues: {
+    name: "",
+    email: "",
+    subject: "",
+    message: ""
+  }
+})
+
+const onSubmit = async (data: ContactFormValues) => {
+  setIsSubmitting(true)
+  try {
+    const response = await fetch("/api/send", {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+
+    const result = await response.json()
+
+    if (!response.ok) {
+      throw new Error(result.error || "Une erreur est survenue")
+    }
+
+    setToast({
+      type: "success",
+      message: "Message envoyé avec succès ! Je vous répondrai dans les plus brefs délais."
+    })
+    form.reset()
+  } catch (error) {
+    setToast({
+      type: "error",
+      message: "Une erreur est survenue lors de l'envoi du message. Veuillez réessayer."
+    })
+  } finally {
+    setIsSubmitting(false)
+  }
+}
+
+
+
+
+
+
+
+
   useEffect(() => {
     // GSAP Animations
     gsap.from(".hero-text", {
@@ -165,43 +359,82 @@ export default function Home() {
   </motion.button>
 </motion.div>
 
-      {/* Menu burger pour mobile */}
-      <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
-      </button>
 
-      {/* Menu navigation desktop */}
-      <nav className="hidden md:flex items-center gap-8">
-        {[
-          ["accueil", "#hero"],
-          ["à propos", "#about"],
-          ["compétences", "#skills"], 
-          ["expérience", "#experience"],
-          ["projets", "#projects"],
-          ["contact", "#contact"]
-        ].map(([label, href]) => (
-          <motion.a
-            key={href}
-            whileHover={{ scale: 1.05 }}
-            href={href}
-            className="text-base font-bold hover:text-gray-600"
-          >
-            {/* Capitaliser le texte affiché */}
-            {label.charAt(0).toUpperCase() + label.slice(1)}
-          </motion.a>
-        ))}
-      </nav>
+{/* Menu burger pour mobile avec animation */}
+<motion.button 
+  className="md:hidden"
+  whileTap={{ scale: 0.9 }}
+  onClick={() => setIsMenuOpen(!isMenuOpen)}
+>
+  <motion.svg 
+    className="w-6 h-6" 
+    fill="none" 
+    stroke="currentColor" 
+    viewBox="0 0 24 24"
+    animate={isMenuOpen ? { rotate: 90 } : { rotate: 0 }}
+    transition={{ duration: 0.3 }}
+  >
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+  </motion.svg>
+</motion.button>
 
-      {/* Menu mobile */}
-      {isMenuOpen && (
+{/* Menu navigation desktop avec animations GSAP */}
+<nav className="hidden md:flex items-center gap-8">
+  {[
+    ["accueil", "#hero"],
+    ["à propos", "#about"],
+    ["compétences", "#skills"],
+    ["expérience", "#experience"],
+    ["projets", "#projects"],
+    ["contact", "#contact"]
+  ].map(([label, href]) => (
+    <motion.a
+      key={href}
+      whileHover={{ 
+        scale: 1.05,
+        y: -2
+      }}
+      onClick={(e) => {
+        e.preventDefault();
+        gsap.to(window, {
+          duration: 1,
+          scrollTo: {
+            y: href,
+            offsetY: 70
+          },
+          ease: "power4.inOut"
+        });
+      }}
+      className="text-base font-bold relative group"
+    >
+      <span className="relative z-10">
+        {label.charAt(0).toUpperCase() + label.slice(1)}
+      </span>
+      <motion.div
+        className="absolute bottom-0 left-0 w-full h-[2px] bg-black origin-left"
+        initial={{ scaleX: 0 }}
+        whileHover={{ scaleX: 1 }}
+        transition={{ duration: 0.3 }}
+      />
+    </motion.a>
+  ))}
+</nav>
+
+{/* Menu mobile avec animations */}
+{isMenuOpen && (
   <motion.div 
     initial={{ opacity: 0, y: -20 }}
     animate={{ opacity: 1, y: 0 }}
+    exit={{ opacity: 0, y: -20 }}
+    transition={{ duration: 0.3 }}
     className="absolute top-full left-0 right-0 bg-white shadow-lg md:hidden"
   >
-    <div className="flex flex-col items-center py-4">
+    <motion.div 
+      className="flex flex-col items-center py-4"
+      variants={container}
+      initial="hidden"
+      animate="show"
+    >
       {[
         ["accueil", "#hero"],
         ["à propos", "#about"],
@@ -209,33 +442,90 @@ export default function Home() {
         ["expérience", "#experience"],
         ["projets", "#projects"],
         ["contact", "#contact"]
-      ].map(([label, href]) => (
+      ].map(([label, href], index) => (
         <motion.a
           key={href}
-          whileHover={{ scale: 1.05 }}
-          href={href}
-          className="py-2 text-base font-bold hover:text-gray-600"
-          onClick={() => setIsMenuOpen(false)}
+          variants={item}
+          whileHover={{ scale: 1.05, x: 10 }}
+          onClick={(e) => {
+            e.preventDefault();
+            setIsMenuOpen(false);
+            gsap.to(window, {
+              duration: 1,
+              scrollTo: {
+                y: href,
+                offsetY: 70
+              },
+              ease: "power4.inOut"
+            });
+          }}
+          className="py-2 px-4 w-full text-center text-base font-bold hover:bg-black hover:text-white transition-colors"
         >
-          {/* Capitaliser le texte affiché */}
           {label.charAt(0).toUpperCase() + label.slice(1)}
         </motion.a>
       ))}
-    </div>
+    </motion.div>
   </motion.div>
-      )}
+)}
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="px-6 py-2 bg-black text-white rounded-none hover:bg-black/90 transition-colors"
-      >
-        Mon CV ↓
-      </motion.button>
+{/* Bouton CV moderne */}
+<motion.button
+  whileHover={{ scale: 1.05 }}
+  whileTap={{ scale: 0.95 }}
+  onClick={() => {
+    // Ici, vous pouvez ajouter une modal ou un drawer pour afficher le CV
+    gsap.to("#cvModal", {
+      duration: 0.5,
+      opacity: 1,
+      y: 0,
+      display: "flex",
+      ease: "power4.out"
+    });
+  }}
+  className="px-6 py-2 bg-black text-white relative group overflow-hidden"
+>
+  <motion.span
+    className="relative z-10 flex items-center gap-2"
+    whileHover={{ x: 5 }}
+  >
+    Mon CV
+    <motion.svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="16" 
+      height="16" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      className="relative z-10"
+      animate={{ 
+        y: [0, -2, 0],
+      }}
+      transition={{ 
+        duration: 1,
+        repeat: Infinity,
+      }}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+    </motion.svg>
+  </motion.span>
+  
+  <motion.div
+    className="absolute inset-0 bg-white"
+    initial={{ y: "100%" }}
+    whileHover={{ y: 0 }}
+    transition={{ duration: 0.3 }}
+  />
+  
+  <motion.div
+    className="absolute inset-0 bg-gradient-to-r from-purple-500 to-blue-500"
+    initial={{ x: "100%" }}
+    whileHover={{ x: 0 }}
+    transition={{ duration: 0.3, delay: 0.1 }}
+  />
+</motion.button>
     </div>
   </div>
 </motion.header>
-
 
       {/* Hero Section */}
       <section className="container mx-auto px-4 py-20" id="hero">
@@ -262,9 +552,8 @@ export default function Home() {
             </div>
 
             <p className="text-gray-600 text-lg max-w-xl">
-              Activement à la recherche d'une alternance, je me spécialise dans la réalisation d'applications avec une orientation backend et DevOps. 
-              Côté développement, JavaScript est mon arme de choix… parce qu'avec son écosystème infini de frameworks et 
-              ses mises à jour tous les deux jours, qui a besoin de stabilité? 😏
+            Actuellement à la recherche d'une alternance, je me spécialise dans la création d'applications avec une orientation backend et DevOps.
+            Si JavaScript est mon langage de prédilection grâce à son écosystème riche et en constante évolution, je suis polyvalent et capable de m'adapter rapidement aux différentes technologies en fonction des besoins du projet.
             </p>
 
             <div className="flex gap-4">
@@ -524,11 +813,18 @@ export default function Home() {
   </div>
 </section>
 
+
+
+
+
       {/* Skills Section */}
       
       <SkillsSection />
       
-      {/* Experience Section */}
+
+
+
+
       {/* Experience Section */}
 {/* Experience Section */}
 <section id="experience" className="py-32 bg-white relative overflow-hidden">
@@ -750,225 +1046,7 @@ export default function Home() {
 
 
 {/* Projects Section */}
-<section id="projects" className="py-32 bg-white relative overflow-hidden">
-  {/* Background Animation */}
-  <div className="absolute inset-0 -z-10">
-    <motion.div
-      animate={{
-        rotate: [0, 360],
-        scale: [1, 1.1, 1],
-      }}
-      transition={{
-        duration: 30,
-        repeat: Infinity,
-        ease: "linear"
-      }}
-      className="absolute -left-1/3 top-1/4 w-[600px] h-[600px] bg-gradient-to-br from-purple-50 to-blue-50 rounded-full opacity-30 blur-3xl"
-    />
-    <motion.div
-      animate={{
-        rotate: [360, 0],
-        scale: [1, 1.2, 1],
-      }}
-      transition={{
-        duration: 25,
-        repeat: Infinity,
-        ease: "linear"
-      }}
-      className="absolute -right-1/4 -bottom-1/4 w-[800px] h-[800px] bg-gradient-to-tr from-orange-50 to-rose-50 rounded-full opacity-30 blur-3xl"
-    />
-  </div>
-
-  <div className="container mx-auto px-4">
-    <motion.div
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      className="max-w-7xl mx-auto"
-    >
-      {/* Section Header */}
-      <div className="text-center mb-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="inline-block"
-        >
-          <span className="text-sm font-bold tracking-wider text-gray-500 uppercase">Réalisations</span>
-          <h2 className="text-5xl font-bold mt-4">
-            Mes{" "}
-            <span className="relative inline-block px-6">
-              Projets
-              <motion.div
-                initial={{ width: 0 }}
-                whileInView={{ width: "100%" }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.8 }}
-                className="absolute bottom-0 left-0 h-3 bg-black/10 -z-10"
-              />
-            </span>
-          </h2>
-        </motion.div>
-      </div>
-
-      {/* Projects Grid - Desktop */}
-      <div className="hidden md:grid grid-cols-12 gap-8">
-        {/* Project 1 - Large */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="col-span-8 group"
-        >
-          <div className="bg-white p-8 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-            <div className="aspect-video relative overflow-hidden rounded-xl mb-6">
-              <Image
-                src="/quizzine.png"
-                alt="Quizzine Preview"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <motion.a
-                  href="https://github.com/BUSCH-Leo/SAE-S3-2024-2025-site-de-quizz"
-                  whileHover={{ scale: 1.05 }}
-                  className="px-6 py-3 bg-white text-black font-medium rounded-full"
-                >
-                  Voir le projet →
-                </motion.a>
-              </div>
-            </div>
-            <span className="text-sm font-bold text-gray-400">01 / FULLSTACK</span>
-            <h3 className="text-2xl font-bold mt-2 mb-4">Quizzine - Plateforme de Quiz Interactive</h3>
-            <p className="text-gray-600 mb-6 line-clamp-2">
-              Une plateforme moderne permettant aux utilisateurs de créer et partager des quiz interactifs.
-            </p>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-black/5 rounded-full text-sm">Next.js</span>
-              <span className="px-3 py-1 bg-black/5 rounded-full text-sm">TypeScript</span>
-              <span className="px-3 py-1 bg-black/5 rounded-full text-sm">Tailwind CSS</span>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Project 2 - Small */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="col-span-4 group"
-        >
-          <div className="bg-white p-6 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-            <div className="aspect-square relative overflow-hidden rounded-xl mb-6">
-              <Image
-                src="/cookieClicker.png"
-                alt="Cookie Clicker Preview"
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <motion.a
-                  href="https://github.com/4keezix/SAE_DEV_CookieClicker"
-                  whileHover={{ scale: 1.05 }}
-                  className="px-6 py-3 bg-white text-black font-medium rounded-full"
-                >
-                  Voir le projet →
-                </motion.a>
-              </div>
-            </div>
-            <span className="text-sm font-bold text-gray-400">02 / DESKTOP</span>
-            <h3 className="text-xl font-bold mt-2 mb-4">Cookie Clicker</h3>
-            <div className="flex flex-wrap gap-2">
-              <span className="px-3 py-1 bg-black/5 rounded-full text-sm">C#</span>
-              <span className="px-3 py-1 bg-black/5 rounded-full text-sm">WPF</span>
-            </div>
-          </div>
-        </motion.div>
-
-        {/* Project 3 - Full Width */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.4 }}
-          className="col-span-12 group"
-        >
-          <div className="bg-white p-8 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-            <div className="grid grid-cols-2 gap-8">
-              <div className="aspect-video relative overflow-hidden rounded-xl">
-                <Image
-                  src="/donjon.png"
-                  alt="Dungeon Forge Preview"
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-              </div>
-              <div className="flex flex-col justify-center">
-                <span className="text-sm font-bold text-gray-400">03 / GAME DEV</span>
-                <h3 className="text-2xl font-bold mt-2 mb-4">Dungeon Forge</h3>
-                <p className="text-gray-600 mb-6">
-                  Générateur procédural de donjons combinant des algorithmes de création de labyrinthes pour une expérience unique à chaque partie.
-                </p>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  <span className="px-3 py-1 bg-black/5 rounded-full text-sm">Unity</span>
-                  <span className="px-3 py-1 bg-black/5 rounded-full text-sm">C#</span>
-                  <span className="px-3 py-1 bg-black/5 rounded-full text-sm">Algorithmes</span>
-                </div>
-                <motion.a
-                  href="https://github.com/Neptune2k21/BUT1-S2.02"
-                  whileHover={{ scale: 1.02 }}
-                  className="self-start px-6 py-3 bg-black text-white font-medium rounded-full"
-                >
-                  Découvrir le projet →
-                </motion.a>
-              </div>
-            </div>
-          </div>
-        </motion.div>
-      </div>
-
-      {/* Projects List - Mobile */}
-      <div className="md:hidden space-y-8">
-        {/* Version mobile simplifiée des projets */}
-        {projects.map((project, index) => (
-          <motion.div
-            key={project.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.2 }}
-            className="bg-white p-6 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-          >
-            <div className="aspect-video relative overflow-hidden rounded-lg mb-4">
-              <Image
-                src={project.image}
-                alt={`${project.title} Preview`}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <span className="text-sm font-bold text-gray-400">{project.category}</span>
-            <h3 className="text-xl font-bold mt-2 mb-3">{project.title}</h3>
-            <p className="text-gray-600 text-sm mb-4 line-clamp-2">{project.description}</p>
-            <div className="flex flex-wrap gap-2 mb-4">
-              {project.technologies.map((tech) => (
-                <span key={tech} className="px-2 py-1 bg-black/5 rounded-full text-xs">{tech}</span>
-              ))}
-            </div>
-            <motion.a
-              href={project.href}
-              whileHover={{ scale: 1.02 }}
-              className="inline-block px-4 py-2 bg-black text-white text-sm font-medium rounded-full"
-            >
-              Voir le projet →
-            </motion.a>
-          </motion.div>
-        ))}
-      </div>
-    </motion.div>
-  </div>
-</section>
+<ProjectSection/>
 
 
 
@@ -982,6 +1060,7 @@ export default function Home() {
 
       {/* Contact Section */}
 <section id="contact" className="py-32 relative overflow-hidden bg-white">
+  
   {/* Animated Background */}
   <div className="absolute inset-0 -z-10">
     <motion.div
@@ -1042,56 +1121,98 @@ export default function Home() {
         className="lg:col-span-3 relative"
       >
         <div className="bg-white p-8 border-2 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:translate-x-1 hover:translate-y-1 hover:shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-sm font-medium">Votre Nom*</label>
                 <Input 
+                  {...form.register("name")}
                   placeholder="Jean Dupont" 
                   className="rounded-none border-2 border-black focus:ring-black bg-white h-12" 
                 />
+                {form.formState.errors.name && (
+                  <p className="text-red-500 text-sm">{form.formState.errors.name.message}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <label className="text-sm font-medium">Votre Email*</label>
-                <Input 
+                <Input
+                  {...form.register("email")} 
                   type="email"
                   placeholder="jean@example.com" 
                   className="rounded-none border-2 border-black focus:ring-black bg-white h-12" 
                 />
+                {form.formState.errors.email && (
+                  <p className="text-red-500 text-sm">{form.formState.errors.email.message}</p>
+                )}
               </div>
             </div>
             
             <div className="space-y-2">
               <label className="text-sm font-medium">Sujet*</label>
               <Input
+                {...form.register("subject")}
                 placeholder="Le sujet de votre message"
                 className="rounded-none border-2 border-black focus:ring-black bg-white h-12"
               />
+              {form.formState.errors.subject && (
+                <p className="text-red-500 text-sm">{form.formState.errors.subject.message}</p>
+                )}
             </div>
 
             <div className="space-y-2">
               <label className="text-sm font-medium">Votre Message*</label>
               <Textarea
+                {...form.register("message")}
                 placeholder="Détaillez votre projet..."
                 className="rounded-none border-2 border-black min-h-[200px] focus:ring-black bg-white"
               />
+              {form.formState.errors.message && (
+                <p className="text-red-500 text-sm">{form.formState.errors.message.message}</p>
+              )}
             </div>
 
             <motion.button
+              disabled={isSubmitting}
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
-              className="w-full py-4 bg-black text-white text-lg font-bold hover:bg-black/90 transition-all flex items-center justify-center gap-2 group"
+              className={`w-full py-4 bg-black text-white text-lg font-bold transition-all flex items-center justify-center gap-2 ${
+                isSubmitting ? "opacity-70 cursor-not-allowed" : "hover:bg-black/90"
+              }`}
+              type="submit"
             >
-              <span>Envoyer le message</span>
-              <motion.span
-                className="inline-block"
-                animate={{ x: [0, 4, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
-              >
-                ➜
-              </motion.span>
+              {isSubmitting ? (
+                <>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
+                  />
+                  <span>Envoi en cours...</span>
+                </>
+              ) : (
+                <>
+                  <span>Envoyer le message</span>
+                  <motion.span
+                    className="inline-block"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity }}
+                  >
+                    ➜
+                  </motion.span>
+                </>
+              )}
             </motion.button>
           </form>
+          {/* Toast notification */}
+
+          {toast && (
+            <Toast
+              message={toast.message}
+              type={toast.type}
+              onClose={() => setToast(null)}
+            />
+          )}
         </div>
       </motion.div>
 

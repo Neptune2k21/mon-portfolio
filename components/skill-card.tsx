@@ -51,10 +51,10 @@ const currentSkills: (Skill & { category: SkillCategory })[] = [
     category: "software"
   },
   {
-    name: "React",
-    icon: "logos:react",
+    name: "Tailwind CSS",
+    icon: "logos:tailwindcss-icon",
     level: 85,
-    description: "Bibliothèque UI",
+    description: "Framework CSS",
     category: "frontend"
   },
   {
@@ -74,6 +74,13 @@ const currentSkills: (Skill & { category: SkillCategory })[] = [
 ];
 
 const learningSkills:  (Skill & { category: SkillCategory })[] = [
+  {
+    name:"Python",
+    icon: "logos:python",
+    level: 60,
+    description: "Langage de programmation",
+    category: "software"
+  },
   {
     name: "Rust",
     icon: "logos:rust",
