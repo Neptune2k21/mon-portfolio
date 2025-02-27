@@ -280,7 +280,7 @@ const onSubmit = async (data: ContactFormValues) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-white">
+<div className="min-h-screen bg-white flex flex-col">
       {/* Header */}
 <motion.header
   initial={{ y: -100, opacity: 0 }}
@@ -1058,8 +1058,9 @@ const onSubmit = async (data: ContactFormValues) => {
 
 
 
-      {/* Contact Section */}
-<section id="contact" className="py-32 relative overflow-hidden bg-white">
+
+{/* Contact Section - dernière section */}
+<section id="contact" className="py-32 pb-16 relative overflow-hidden bg-white">
   
   {/* Animated Background */}
   <div className="absolute inset-0 -z-10">
@@ -1332,32 +1333,7 @@ const onSubmit = async (data: ContactFormValues) => {
 
 
       {/* Footer */}
-      <footer className="bg-black text-white py-6 fixed bottom-0 left-0 right-0 z-50">
-        <div className="container mx-auto px-4">
-          {/* Desktop layout */}
-          <div className="hidden md:flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <Image src="/neptune.svg" alt="CisseMamadou Logo" width={32} height={32} className="rounded-full" />
-              <span className="text-xl"></span>
-            </div>
-            <div className="flex items-center gap-4">
-              <span>© 2025 Cisse Mamadou</span>
-              <span>Tout droit reservé</span>
-            </div>
-          </div>
 
-          {/* Mobile layout */}
-          <div className="md:hidden flex flex-col items-center gap-2 text-center">
-            <div className="flex items-center gap-2">
-              <Image src="/neptune.svg" alt="CisseMamadou Logo" width={24} height={24} className="rounded-full" />
-            </div>
-            <div className="flex flex-col text-sm">
-              <span>© 2025 Cisse Mamadou</span>
-              <span>Tout droit reservé</span>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
   )
 }
