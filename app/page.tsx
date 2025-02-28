@@ -16,6 +16,7 @@ import {zodResolver} from "@hookform/resolvers/zod"
 import { ContactFormValues, contactFormSchema } from "@/app/types/contact"
 import SkillsSection from "@/components/skill-card"
 import {Toast} from "@/components/ui/toast"
+import { CVModal } from "@/components/cv-modal"
 
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(ScrollToPlugin);
@@ -36,6 +37,7 @@ const item = {
 
 
 export default function Home() {
+  const [isCVModalOpen, setIsCVModalOpen] = useState(false);
   const ProjectSection = () => {
     const projects = [
       {
@@ -472,16 +474,7 @@ const onSubmit = async (data: ContactFormValues) => {
 <motion.button
   whileHover={{ scale: 1.05 }}
   whileTap={{ scale: 0.95 }}
-  onClick={() => {
-    // Ici, vous pouvez ajouter une modal ou un drawer pour afficher le CV
-    gsap.to("#cvModal", {
-      duration: 0.5,
-      opacity: 1,
-      y: 0,
-      display: "flex",
-      ease: "power4.out"
-    });
-  }}
+  onClick={() => setIsCVModalOpen(true)}
   className="px-6 py-2 bg-black text-white relative group overflow-hidden"
 >
   <motion.span
@@ -523,6 +516,12 @@ const onSubmit = async (data: ContactFormValues) => {
     transition={{ duration: 0.3, delay: 0.1 }}
   />
 </motion.button>
+
+    {/*  modal cv */}
+    <CVModal 
+      isOpen={isCVModalOpen} 
+      onClose={() => setIsCVModalOpen(false)} 
+    />
     </div>
   </div>
 </motion.header>
