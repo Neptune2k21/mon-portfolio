@@ -4,10 +4,9 @@ import { useEffect, RefObject } from "react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/ScrollTrigger"
 import { ScrollToPlugin } from "gsap/ScrollToPlugin"
-
-// Assurez-vous que GSAP est enregistré avec ses plugins
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, ScrollToPlugin)
+import { isClient } from "@/lib/utils"
+if (isClient) {
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 interface UseHeroAnimationsProps {
@@ -17,7 +16,7 @@ interface UseHeroAnimationsProps {
 export function useHeroAnimations({ heroRef }: UseHeroAnimationsProps) {
   useEffect(() => {
     // Vérifier que le DOM est bien chargé
-    if (!heroRef.current) return;
+    if (!isClient) return;
 
     // Créer un contexte GSAP pour éviter les conflits
     const ctx = gsap.context(() => {

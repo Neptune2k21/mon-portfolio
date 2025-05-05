@@ -9,12 +9,12 @@ import { usePathname } from "next/navigation";
 import { CVModal } from "./cv-modal";
 import { Icon } from "@iconify/react"
 import ThemeToggle from "./theme-toggle";
+import { isClient } from "@/lib/utils";
 
 // Enregistrement du plugin ScrollTrigger
-if (typeof window !== "undefined") {
+if (isClient) {
   gsap.registerPlugin(ScrollTrigger);
 }
-
 // Variantes d'animation pour le menu mobile
 const menuVariants = {
     closed: {
