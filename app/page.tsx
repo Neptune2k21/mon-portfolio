@@ -6,11 +6,23 @@ import { Icon } from "@iconify/react"
 import { motion } from "framer-motion"
 import { useRef } from "react"
 import { useHeroAnimations } from "@/hooks/use-hero-animation"
+import { isClient } from "@/lib/utils"
+import { useEffect } from "react"
+import { useState } from "react"
 
 export default function Home() {
   const heroRef = useRef(null)
+  const [isMounted, setIsMounted] = useState(false);
   
-  useHeroAnimations({ heroRef })
+  // S'assurer que tout code qui accède au DOM ne s'exécute que côté client
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+  useEffect(() => {
+    if (isMounted) {
+      useHeroAnimations({ heroRef });
+    }
+  }, [isMounted, heroRef]);
 
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-slate-900 overflow-hidden">
