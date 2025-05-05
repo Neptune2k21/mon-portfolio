@@ -596,17 +596,7 @@ export default function Header() {
         </div>
 
         {/* Indicateur de défilement */}
-        <motion.div 
-          className="absolute bottom-0 left-0 h-[2px] bg-gradient-to-r from-primary/60 via-primary to-secondary/60"
-          style={{
-            scaleX: useTransform(
-              scrollY, 
-              [0, document.body?.scrollHeight - window.innerHeight || 1000], 
-              [0, 1]
-            ),
-            transformOrigin: "left"
-          }}
-        />
+
       </motion.header>
 
       {/* Nouveau menu mobile fullscreen */}

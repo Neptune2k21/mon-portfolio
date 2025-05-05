@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://cisse-mamadou.me
+
+# Sitemaps
+Sitemap: https://cisse-mamadou.me/sitemap.xml
