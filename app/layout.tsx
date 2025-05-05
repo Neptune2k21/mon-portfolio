@@ -1,9 +1,13 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter } from "next/font/google"
+import { geist } from "@/lib/font"
 import "./globals.css"
+import  Header  from "@/components/header"
+import CustomCursor from "@/components/cursor"
+import { ThemeProvider } from "@/components/theme-provider"
+import  ThemeAmbiance from "@/components/theme-ambiance"
 
-const inter = Inter({ subsets: ["latin"] })
+
 
 export const metadata: Metadata = {
   title: "Cisse Mamadou | Développeur FullStack | Portfolio",
@@ -85,11 +89,23 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="fr">
+    <html lang="fr" suppressHydrationWarning>
       <head>
         <link rel="canonical" href="https://cisse-mamadou.me/" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={geist.className}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange={false}
+        >
+          <ThemeAmbiance />
+          <Header />
+          {children}
+          <CustomCursor />
+        </ThemeProvider>
+      </body>
     </html>
   )
 }

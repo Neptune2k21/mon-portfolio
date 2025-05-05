@@ -33,6 +33,37 @@
     --ring: 0 0% 3.9%;
 
     --radius: 0.5rem;
+    --font-geist: var(--font-geist);
+  }
+    .dark {
+    /* Variables mode sombre */
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
   }
 }
 
@@ -42,3 +73,91 @@
   }
 }
 
+/* Ajouter à la fin du fichier */
+
+/* Animation du défilement */
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.float-animation {
+  animation: floatUp 0.8s ease-out forwards;
+}
+
+/* Transitions fluides */
+.page-transition {
+  transition: all 0.5s ease-in-out;
+}
+
+/* Effet de déplacement au survol */
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+/* Animation de l'indicateur actif */
+.nav-active-indicator {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Marqueurs décoratifs */
+.section-marker {
+  position: relative;
+}
+
+.section-marker::before {
+  content: "";
+  position: absolute;
+  left: -15px;
+  top: 50%;
+  width: 10px;
+  height: 2px;
+  background: linear-gradient(to right, hsl(var(--primary)), transparent);
+  transform: translateY(-50%);
+}
+
+
+/* Transitions de thème avancées */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 1s;
+}
+
+/* Effet smooth sur le changement de couleurs */
+*, *::before, *::after {
+  transition: background-color 0.5s ease, 
+              color 0.5s ease, 
+              border-color 0.5s ease, 
+              box-shadow 0.5s ease;
+}
+
+/* Animation de particules lors du changement de thème */
+.theme-transition-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), 
+              transparent 0%, 
+              rgba(0, 0, 0, 0.2) 20%, 
+              transparent 60%);
+  opacity: 0;
+  transition: opacity 0.6s ease-out;
+}
+
+.theme-transition-active .theme-transition-overlay {
+  opacity: 1;
+}
