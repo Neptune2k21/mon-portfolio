@@ -6,7 +6,6 @@ import { Icon } from "@iconify/react"
 import { motion } from "framer-motion"
 import { useRef } from "react"
 import { useHeroAnimations } from "@/hooks/use-hero-animation"
-import { isClient } from "@/lib/utils"
 import { useEffect } from "react"
 import { useState } from "react"
 
@@ -18,11 +17,7 @@ export default function Home() {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-  useEffect(() => {
-    if (isMounted) {
-      useHeroAnimations({ heroRef });
-    }
-  }, [isMounted, heroRef]);
+  useHeroAnimations({ heroRef, isMounted });
 
   return (
     <main className="min-h-screen bg-slate-50 dark:bg-slate-900 overflow-hidden">
