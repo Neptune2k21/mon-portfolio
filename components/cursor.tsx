@@ -2,12 +2,31 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/components/ui/use-mobile";
 
 export default function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(true); // Par défaut, supposer qu'il s'agit d'un appareil tactile
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    // Vérifie si l'appareil est tactile
+    const checkTouchDevice = () => {
+      setIsTouchDevice(
+        'ontouchstart' in window || 
+        navigator.maxTouchPoints > 0 ||
+        (navigator as any).msMaxTouchPoints > 0
+      );
+    };
+
+    checkTouchDevice();
+
+    // Ne pas initialiser le curseur personnalisé sur les appareils tactiles/mobiles
+    if (isTouchDevice || isMobile) {
+      return;
+    }
+
     // Fonction pour suivre la position de la souris
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY });
@@ -38,7 +57,12 @@ export default function CustomCursor() {
       document.removeEventListener("mouseover", handleMouseOver);
       document.body.style.cursor = "auto";
     };
-  }, []);
+  }, [isTouchDevice, isMobile]);
+
+  // Ne pas rendre le composant sur les appareils tactiles/mobiles
+  if (isTouchDevice || isMobile) {
+    return null;
+  }
 
   return (
     <>

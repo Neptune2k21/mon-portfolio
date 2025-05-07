@@ -6,6 +6,7 @@ import  Header  from "@/components/header"
 import CustomCursor from "@/components/cursor"
 import { ThemeProvider } from "@/components/theme-provider"
 import  ThemeAmbiance from "@/components/theme-ambiance"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 
@@ -15,15 +16,15 @@ export const metadata: Metadata = {
   keywords: [
     "Cisse Mamadou",
     "Mamadou Cisse",
+    "développeur web",
+    "développeur fullstack",
     "Cisse Mamadou développeur",
     "Cisse Mamadou portfolio",
     "Cisse Mamadou développeur web",
     "Cisse Mamadou développeur fullstack",
     "Cisse Mamadou portfolio développeur",
     "Cisse Mamadou portfolio développeur web",
-    "développeur fullstack",
     "portfolio",
-    "développeur web",
     "Next.js",
     "TypeScript",
     "DevOps",
@@ -39,6 +40,13 @@ export const metadata: Metadata = {
     "IUT Dijon",
     "IUT Dijon-Auxerre",
     "IUT Dijon-Auxerre Informatique",
+    "site web",
+    "site internet",
+    "application web bamako",
+    "application mobile bamako",
+    "application mobile",
+    "application web",
+    "application",
   ],
   authors: [{ name: "Cisse Mamadou" }],
   creator: "Cisse Mamadou",
@@ -92,6 +100,7 @@ export default function RootLayout({
     <html lang="fr" suppressHydrationWarning>
       <head>
         <link rel="canonical" href="https://cisse-mamadou.me/" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className={geist.className}>
         <ThemeProvider
@@ -103,6 +112,7 @@ export default function RootLayout({
           <ThemeAmbiance />
           <Header />
           {children}
+          <SpeedInsights/>
           <CustomCursor />
         </ThemeProvider>
       </body>
