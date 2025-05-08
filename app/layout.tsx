@@ -11,6 +11,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://cisse-mamadou.me"),
   title: "Cisse Mamadou | Développeur FullStack | Portfolio",
   description: "Portfolio de Cisse Mamadou, développeur FullStack spécialisé en Next.js, TypeScript et DevOps. Découvrez mes projets et compétences en développement web.",
   keywords: [

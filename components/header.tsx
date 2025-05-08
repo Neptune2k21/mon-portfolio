@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useRef } from "react";
-import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useAnimation } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import gsap from "gsap";
@@ -10,6 +10,8 @@ import { CVModal } from "./cv-modal";
 import { Icon } from "@iconify/react"
 import ThemeToggle from "./theme-toggle";
 import { isClient } from "@/lib/utils";
+import React from "react";
+
 
 // Enregistrement du plugin ScrollTrigger
 if (isClient) {
@@ -17,41 +19,51 @@ if (isClient) {
 }
 // Variantes d'animation pour le menu mobile
 const menuVariants = {
-    closed: {
-      opacity: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeInOut",
-        staggerChildren: 0.05,
-        staggerDirection: -1,
-        when: "afterChildren"
-      }
-    },
-    open: {
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: "easeOut",
-        staggerChildren: 0.1,
-        delayChildren: 0.1,
-        when: "beforeChildren"
-      }
+  closed: {
+    opacity: 0,
+    transition: {
+      duration: 0.2,
+      ease: "easeInOut",
+      staggerChildren: 0.03,
+      staggerDirection: -1,
+      when: "afterChildren"
     }
-  };
+  },
+  open: {
+    opacity: 1,
+    transition: {
+      duration: 0.3,
+      ease: [0.22, 1, 0.36, 1],
+      staggerChildren: 0.06,
+      delayChildren: 0.05,
+      when: "beforeChildren"
+    }
+  }
+};
 
 // Animation des éléments du menu
 const menuItemVariants = {
-    closed: { 
-      y: 20, 
-      opacity: 0,
-      transition: { duration: 0.2 }
-    },
-    open: { 
-      y: 0, 
-      opacity: 1,
-      transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] }
+  closed: (i: number) => ({ 
+    y: 20, 
+    opacity: 0,
+    transition: { 
+      duration: 0.15,
+      delay: i * 0.03
     }
-  };
+  }),
+  open: (i: number) => ({ 
+    y: 0, 
+    opacity: 1,
+    transition: { 
+      duration: 0.3, 
+      delay: i * 0.06,
+      ease: [0.22, 1, 0.36, 1],
+      type: "spring",
+      stiffness: 350,
+      damping: 25
+    }
+  })
+};
 
 // Variantes pour le menu desktop
 const navVariants = {
@@ -80,7 +92,7 @@ const itemVariants = {
 };
 
 // Formes géométriques pour l'arrière-plan
-const ShapesBackground = () => {
+const ShapesBackground = React.memo(() => {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <motion.div
@@ -122,163 +134,209 @@ const ShapesBackground = () => {
       />
     </div>
   );
-};
+});
 
 
+// Nouveau menu mobile plein écran optimisé
+const FullscreenMobileMenu = ({ 
+  isOpen, 
+  onClose, 
+  navItems, 
+  pathname, 
+  onCVClick 
+}: { 
+  isOpen: boolean;
+  onClose: () => void;
+  navItems: Array<{ label: string; href: string }>;
+  pathname: string;
+  onCVClick: () => void;
+}) => {
+  const controls = useAnimation();
   
-  // Nouveau menu mobile plein écran
-  const FullscreenMobileMenu = ({ 
-    isOpen, 
-    onClose, 
-    navItems, 
-    pathname, 
-    onCVClick 
-  }: { 
-    isOpen: boolean;
-    onClose: () => void;
-    navItems: Array<{ label: string; href: string }>;
-    pathname: string;
-    onCVClick: () => void;
-  }) => {
-    return (
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div 
-            className="fixed inset-0 z-50 flex flex-col bg-background dark:bg-background"
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-          >
-            {/* Header du menu */}
-            <div className="flex items-center justify-between p-6 border-b border-border">
-              <div className="flex items-center gap-3">
+  // Synchroniser les contrôles avec l'état d'ouverture
+  useEffect(() => {
+    if (isOpen) {
+      controls.start("open");
+    } else {
+      controls.start("closed");
+    }
+  }, [isOpen, controls]);
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div 
+          className="fixed inset-0 z-50 flex flex-col bg-background dark:bg-background"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ 
+            duration: 0.25, // Légèrement plus rapide pour une sensation plus réactive
+            ease: [0.22, 1, 0.36, 1] // Courbe d'accélération lisse
+          }}
+        >
+          {/* Header du menu avec geste de balayage pour fermer */}
+          <div className="flex items-center justify-between p-6 border-b border-border">
+            <motion.div 
+              className="flex items-center gap-3"
+              initial={{ x: -20, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              transition={{ delay: 0.1, duration: 0.3 }}
+            >
+              <div className="relative">
                 <Image 
                   src="/neptune.svg" 
                   alt="CisseMamadou Logo" 
                   width={36} 
                   height={36} 
                   className="rounded-full" 
+                  priority={true} // Charger l'image en priorité
                 />
-                <span className="text-xl font-semibold text-foreground">
-                  Cisse<span className="font-bold">Mamadou</span>
-                </span>
-              </div>
-              
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={onClose}
-                className="p-2 rounded-full bg-muted hover:bg-muted/80"
-                aria-label="Fermer le menu"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </motion.button>
-            </div>
-            
-            {/* Menu principal */}
-            <motion.div 
-              className="flex-1 flex flex-col justify-center px-8 py-10"
-              variants={menuVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-            >
-              <nav className="space-y-8">
-                {navItems.map((item) => (
-                  <motion.div
-                    key={item.href}
-                    variants={menuItemVariants}
-                  >
-                    <Link 
-                      href={item.href} 
-                      className="flex items-center group"
-                      onClick={onClose}
-                    >
-                      <motion.span 
-                        className={`inline-block text-4xl font-bold transition-colors ${
-                          pathname === item.href 
-                            ? "text-primary" 
-                            : "text-foreground"
-                        }`}
-                        whileHover={{ x: 10 }}
-                      >
-                        {item.label}
-                      </motion.span>
-                      
-                      <motion.div
-                        initial={{ width: pathname === item.href ? 40 : 0 }}
-                        whileHover={{ width: 40 }}
-                        className="h-1 bg-primary ml-4 rounded-full"
-                      />
-                    </Link>
-                  </motion.div>
-                ))}
-              </nav>
-              
-              {/* Bouton CV */}
-              <motion.div 
-                className="mt-16"
-                variants={menuItemVariants}
-              >
-                <motion.button
-                  onClick={() => {
-                    onClose();
-                    onCVClick();
+                <motion.div 
+                  className="absolute -inset-1 rounded-full bg-primary/10"
+                  animate={{ 
+                    rotate: [0, 360],
+                    scale: [1, 1.1, 1]
                   }}
-                  className="flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-medium"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  <span className="text-lg">Voir mon CV</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m0 0l-6-6m6 6l6-6" />
-                  </svg>
-                </motion.button>
-              </motion.div>
+                  transition={{ duration: 3, repeat: Infinity }}
+                />
+              </div>
+              <span className="text-xl font-semibold text-foreground">
+                Cisse<span className="font-bold">Mamadou</span>
+              </span>
             </motion.div>
             
-            {/* Footer du menu */}
+            <motion.button
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              whileTap={{ scale: 0.9, rotate: -5 }}
+              onClick={onClose}
+              className="p-2.5 rounded-full bg-muted hover:bg-muted/80 transition-colors"
+              aria-label="Fermer le menu"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M18 6L6 18M6 6l12 12" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </motion.button>
+          </div>
+          
+          {/* Menu principal avec effet de stagger amélioré */}
+          <motion.div 
+            className="flex-1 flex flex-col justify-center px-8 py-10"
+            variants={menuVariants}
+            initial="closed"
+            animate={controls}
+          >
+            <nav className="space-y-8">
+              {navItems.map((item, index) => (
+                <motion.div
+                  key={item.href}
+                  variants={menuItemVariants}
+                  custom={index} // Permet un stagger personnalisé
+                >
+                  <Link 
+                    href={item.href} 
+                    className="flex items-center group"
+                    onClick={onClose}
+                  >
+                    <motion.span 
+                      className={`inline-block text-4xl font-bold transition-colors ${
+                        pathname === item.href 
+                          ? "text-primary" 
+                          : "text-foreground"
+                      }`}
+                      whileHover={{ x: 10 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                    >
+                      {item.label}
+                    </motion.span>
+                    
+                    <motion.div
+                      initial={{ width: pathname === item.href ? 40 : 0 }}
+                      whileHover={{ width: 40 }}
+                      className="h-1 bg-primary ml-4 rounded-full origin-left"
+                      transition={{ duration: 0.2 }}
+                    />
+                  </Link>
+                </motion.div>
+              ))}
+            </nav>
+            
+            {/* Bouton CV avec effet d'élasticité */}
             <motion.div 
-              className="px-8 py-6 border-t border-border flex justify-between items-center"
+              className="mt-16"
               variants={menuItemVariants}
             >
-              <span className="text-sm text-muted-foreground">© 2023 Cisse Mamadou</span>
-              
-              <div className="flex gap-4">
-                <motion.a
-                  href="https://github.com/Neptune2k21"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -3 }}
-                  className="p-3 rounded-full bg-muted hover:bg-muted/80 text-foreground"
+              <motion.button
+                onClick={() => {
+                  onCVClick();
+                  onClose();
+                }}
+                className="flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-lg font-medium"
+                whileHover={{ scale: 1.03, y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{
+                  type: "spring",
+                  stiffness: 500,
+                  damping: 15
+                }}
+              >
+                <span className="text-lg">Voir mon CV</span>
+                <motion.svg 
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20" 
+                  height="20" 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2"
+                  animate={{ y: [0, -3, 0] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-                  </svg>
-                </motion.a>
-                <motion.a
-                  href="https://www.linkedin.com/in/mamadou-lamine-ciss%C3%A9/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -3 }}
-                  className="p-3 rounded-full bg-muted hover:bg-muted/80 text-foreground"
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-                    <rect x="2" y="9" width="4" height="12" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
-                </motion.a>
-              </div>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m0 0l-6-6m6 6l6-6" />
+                </motion.svg>
+              </motion.button>
             </motion.div>
           </motion.div>
-        )}
-      </AnimatePresence>
-    );
-  };
+          
+          {/* Footer avec lien vers les réseaux sociaux */}
+          <motion.div 
+            className="px-8 py-6 border-t border-border flex justify-between items-center"
+            variants={menuItemVariants}
+          >
+            <span className="text-sm text-muted-foreground">© {new Date().getFullYear()} Cisse Mamadou</span>
+            
+            <div className="flex gap-4">
+              <motion.a
+                href="https://github.com/Neptune2k21"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -3, backgroundColor: "rgba(var(--primary), 0.1)" }}
+                className="p-3 rounded-full bg-muted hover:bg-muted/80 text-foreground transition-colors"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                </svg>
+              </motion.a>
+              <motion.a
+                href="https://www.linkedin.com/in/mamadou-lamine-ciss%C3%A9/"
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -3, backgroundColor: "rgba(var(--primary), 0.1)" }}
+                className="p-3 rounded-full bg-muted hover:bg-muted/80 text-foreground transition-colors"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+                  <rect x="2" y="9" width="4" height="12" />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+              </motion.a>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+};
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
