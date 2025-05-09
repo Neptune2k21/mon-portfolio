@@ -6,6 +6,7 @@ import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import { Code, Compass, Heart, Lightbulb, Users } from "lucide-react";
 
+
 export default function AboutPage() {
   // Références et hooks
   const containerRef = useRef(null);
