@@ -9,6 +9,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import ThemeAmbiance from "@/components/theme-ambiance"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import PerformanceOptimizer from "@/components/performance-optimizer"
+import { Analytics } from "@vercel/analytics/next"
 
 
 
@@ -116,6 +117,8 @@ export default function RootLayout({
           <Header />
           {children}
           <SpeedInsights/>
+          <Analytics />
+          {/* Custom cursor component */}
           <CustomCursor />
         </ThemeProvider>
       </body>
