@@ -2,11 +2,13 @@ import type React from "react"
 import type { Metadata } from "next"
 import { geist } from "@/lib/font"
 import "./globals.css"
-import  Header  from "@/components/header"
+import "../styles/performance-optimizations.css"
+import Header from "@/components/header"
 import CustomCursor from "@/components/cursor"
 import { ThemeProvider } from "@/components/theme-provider"
-import  ThemeAmbiance from "@/components/theme-ambiance"
+import ThemeAmbiance from "@/components/theme-ambiance"
 import { SpeedInsights } from "@vercel/speed-insights/next"
+import PerformanceOptimizer from "@/components/performance-optimizer"
 
 
 
@@ -102,14 +104,14 @@ export default function RootLayout({
       <head>
         <link rel="canonical" href="https://cisse-mamadou.me/" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
-      <body className={geist.className}>
+      </head>      <body className={`${geist.className} auto-optimize`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
-          disableTransitionOnChange={false}
+          disableTransitionOnChange={true}
         >
+          <PerformanceOptimizer />
           <ThemeAmbiance />
           <Header />
           {children}

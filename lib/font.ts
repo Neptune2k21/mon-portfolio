@@ -1,5 +1,6 @@
 import localFont from 'next/font/local';
 
+// Optimisation du chargement des polices
 export const geist = localFont({
   src: [
     {
@@ -25,4 +26,13 @@ export const geist = localFont({
   ],
   variable: '--font-geist',
   display: 'swap',
+  preload: true,
+  fallback: ['system-ui', 'sans-serif'],
+  adjustFontFallback: 'Arial',
+  // Optimisation pour réduire les Layout Shifts (Cumulative Layout Shift)
+  declarations: [
+    { prop: 'ascent-override', value: '90%' },
+    { prop: 'descent-override', value: '10%' },
+    { prop: 'line-gap-override', value: '0%' },
+  ],
 });

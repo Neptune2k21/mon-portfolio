@@ -1,0 +1,60 @@
+/* Styles d'optimisation de performance */
+
+/* Optimisations pour les appareils à faible puissance */
+.low-power-device .floating-shape {
+  animation-play-state: paused !important;
+  transform: none !important;
+  transition: none !important;
+}
+
+.low-power-device .parallax-layer {
+  transform: none !important;
+  transition: none !important;
+}
+
+/* Réduire la qualité des images pour les appareils à faible puissance */
+.reduced-quality img {
+  image-rendering: optimizeSpeed;
+}
+
+/* Optimisations pour favoriser les animations GPU */
+.hero-name,
+.hero-title,
+.hero-badge,
+.hero-desc,
+.hero-socials a,
+.hero-image-container,
+.alternance-banner {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Réduit les animations sur les appareils à faible puissance */
+.reduced-animation {
+  animation: none !important;
+  transition: opacity 0.3s ease-out !important;
+}
+
+/* Optimisation des transitions de page */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease-out, transform 300ms ease-out;
+}
+
+.page-transition-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 200ms ease-in, transform 200ms ease-in;
+}

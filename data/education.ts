@@ -22,7 +22,7 @@ export type ExperienceItem = {
       title: "Stage Développeur FullStack",
       company: "Davi The Humanizers",
       period: "Jan 2025 - Mars 2025",
-      description: "Développement web et déploiement d'applications",
+      description: "Développement et mise à jour d’applications web, gestion d’environnements locaux avec Docker, supervision des déploiements en préproduction et production. Résolution de bugs, gestion de version avec Git et Azure DevOps, et participation à la gestion de projets en méthodologie Agile.",
       skills: ["Next.js", "TypeScript", "Docker"],
       logo: "/davi_thehumanizers_logo.jpeg",
       isImageLogo: true
