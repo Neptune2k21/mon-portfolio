@@ -10,6 +10,9 @@ import ThemeAmbiance from "@/components/theme-ambiance"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import PerformanceOptimizer from "@/components/performance-optimizer"
 import { Analytics } from "@vercel/analytics/next"
+import StructuredData from "@/components/structured-data"
+
+
 
 
 
@@ -20,14 +23,52 @@ export const metadata: Metadata = {
   keywords: [
     "Cisse Mamadou",
     "Mamadou Cisse",
+    "développeur web France",
+    "développeur freelance France", 
+    "développeur Next.js France",
+    "mission développeur web",
+    "freelance développeur TypeScript",
+    "développeur React freelance",
+    "mission freelance Next.js",
+    "développeur web Bourgogne",
+    "développeur Dijon disponible",
+    "freelance développeur JavaScript France",
+    "alternance développeur web 2024",
+    "alternance développeur fullstack",
+    "mission développeur React",
+    "projet développeur Next.js",
+    "développeur web disponible",
+    "freelance mission courte",
+    "développeur junior alternance",
+    "stage développeur web",
+    "contrat développeur JavaScript",
     "développeur web",
+    "developpeur Nevers",
+    "developpeur freelance",
+    "développeur freelance Nevers",
     "développeur fullstack",
+    "développeur MERN stack",
+    "développeur JAMstack",
+    "développeur API REST",
+    "développeur Node.js freelance",
+    "développeur PostgreSQL",
+    "développeur MongoDB freelance",
+    "développeur Express.js",
+    "développeur Tailwind CSS freelance",
     "Cisse Mamadou développeur",
     "Cisse Mamadou portfolio",
     "Cisse Mamadou développeur web",
     "Cisse Mamadou développeur fullstack",
     "Cisse Mamadou portfolio développeur",
     "Cisse Mamadou portfolio développeur web",
+    "création site web sur mesure",
+    "développement application web",
+    "refonte site internet",
+    "développeur e-commerce",
+    "développeur SaaS",
+    "développeur MVP",
+    "développeur landing page",
+    "développeur site vitrine",
     "portfolio",
     "Next.js",
     "TypeScript",
@@ -105,7 +146,9 @@ export default function RootLayout({
       <head>
         <link rel="canonical" href="https://cisse-mamadou.me/" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>      <body className={`${geist.className} auto-optimize`}>
+        <StructuredData />
+      </head>      
+      <body className={`${geist.className} auto-optimize`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -119,7 +162,7 @@ export default function RootLayout({
           <SpeedInsights/>
           <Analytics />
           {/* Custom cursor component */}
-          <CustomCursor />
+          {/* <CustomCursor /> */}
         </ThemeProvider>
       </body>
     </html>
