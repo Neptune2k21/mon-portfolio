@@ -144,7 +144,6 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
-        <link rel="canonical" href="https://cisse-mamadou.me/" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <StructuredData />
       </head>      
