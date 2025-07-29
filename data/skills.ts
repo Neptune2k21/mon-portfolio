@@ -79,6 +79,20 @@ export const currentSkills: (Skill & { category: SkillCategory })[] = [
         description: "Outil de Design d'interface",
         category: "Design"
     },
+    {
+        name: "React Native",
+        icon: "logos:react",
+        level: 75,
+        description: "Développement d'applications mobiles avec React",
+        category: "Frontend"
+    },
+    {
+        name: "Expo",
+        icon: "logos:expo-icon",
+        level: 70,
+        description: "Framework et outil pour apps React Native",
+        category: "Frontend"
+    },
 
 ];
 
