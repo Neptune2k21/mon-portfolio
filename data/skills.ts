@@ -24,6 +24,13 @@ export const currentSkills: (Skill & { category: SkillCategory })[] = [
         category: "Frontend"
     },
     {
+        name: "NestJS",
+        icon: "logos:nestjs",
+        level: 70,
+        description: "Framework Node.js",
+        category: "Backend"
+    },
+    {
         name: "JavaScript",
         icon: "logos:javascript",
         level: 90,
@@ -38,11 +45,11 @@ export const currentSkills: (Skill & { category: SkillCategory })[] = [
         category: "Logiciels"
     },
     {
-        name: "Tailwind CSS",
-        icon: "logos:tailwindcss-icon",
-        level: 85,
-        description: "Framework CSS",
-        category: "Frontend"
+        name: "PhP",
+        icon: "logos:php",
+        level: 65,
+        description: "Langage de programmation",
+        category: "Backend"
     },
     {
         name: "PostgreSQL",
@@ -59,11 +66,11 @@ export const currentSkills: (Skill & { category: SkillCategory })[] = [
         category: "Backend"
     },
     {
-        name: "Csharp",
-        icon: "logos:c-sharp",
-        level: 70,
-        description: "Langage de programmation",
-        category: "Logiciels"
+        name: "Tailwind CSS",
+        icon: "logos:tailwindcss-icon",
+        level: 85,
+        description: "Framework CSS",
+        category: "Frontend"
     },
     {
         name: "Docker",
@@ -103,6 +110,13 @@ export const learningSkills:  (Skill & { category: SkillCategory })[] = [
         level: 60,
         description: "Langage de programmation",
         category: "Logiciels"
+    },
+    {
+        name: "Symfony",
+        icon: "logos:symfony",
+        level: 50,
+        description: "Framework PHP",
+        category: "Backend"
     },
     {
         name: "AWS",
@@ -191,6 +205,11 @@ export const OtherSkills = [
         name: "VSCode",
         icon: "logos:visual-studio-code",
         description: "Éditeur de code"
+    },
+    {
+        name: "Linux",
+        icon: "logos:linux-tux",
+        description: "Système d'exploitation"
     },
 ];
 export const methods = [
