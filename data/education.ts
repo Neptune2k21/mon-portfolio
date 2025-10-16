@@ -35,7 +35,17 @@ export type ExperienceItem = {
       skills: ["Travail d'équipe", "Gestion du temps"],
       logo: "/mcdonald-s-5.svg",
       isImageLogo: true
+    },
+    {
+      title: "Développeur Fullstack",
+      company: "Dyby’s",
+      period: "Mars 2024 – Juin 2025",
+      description: "Conception et développement de deux modules clés pour la plateforme Dyby’s : un système de gestion RGPD permettant aux professionnels de centraliser la conformité des données clients, et un module de gestion de promotions pour la création, le suivi et l’analyse de campagnes marketing. Travail en collaboration avec l’équipe produit et intégration au CRM et à l’application mobile existante dédiée aux prestataires de beauté.",
+      skills: ["Symfony", "PHP", "TypeScript", "React", "PostgreSQL", "Docker", "API REST", "Git"],
+      logo: "/dybys.ico",
+      isImageLogo: true
     }
+
   ]
   
   export const educations: EducationItem[] = [
