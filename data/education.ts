@@ -28,21 +28,21 @@ export type ExperienceItem = {
       isImageLogo: true
     },
     {
+      title: "Développeur Fullstack",
+      company: "Dyby’s",
+      period: "Janvier 2024 – Juin 2024",
+      description: "Conception et développement de deux modules clés pour la plateforme Dyby’s : un système de gestion RGPD permettant aux professionnels de centraliser la conformité des données clients, et un module de gestion de promotions pour la création, le suivi et l’analyse de campagnes marketing.",
+      skills: ["Symfony", "PHP", "TypeScript", "React", "PostgreSQL", "Docker", "API REST", "Git"],
+      logo: "/dybys.ico",
+      isImageLogo: true
+    },
+    {
       title: "Équipier Polyvalent",
       company: "McDonald's",
       period: "Avril 2024 - Aujourd'hui",
       description: "Développement de compétences transversales",
       skills: ["Travail d'équipe", "Gestion du temps"],
       logo: "/mcdonald-s-5.svg",
-      isImageLogo: true
-    },
-    {
-      title: "Développeur Fullstack",
-      company: "Dyby’s",
-      period: "Mars 2024 – Juin 2025",
-      description: "Conception et développement de deux modules clés pour la plateforme Dyby’s : un système de gestion RGPD permettant aux professionnels de centraliser la conformité des données clients, et un module de gestion de promotions pour la création, le suivi et l’analyse de campagnes marketing. Travail en collaboration avec l’équipe produit et intégration au CRM et à l’application mobile existante dédiée aux prestataires de beauté.",
-      skills: ["Symfony", "PHP", "TypeScript", "React", "PostgreSQL", "Docker", "API REST", "Git"],
-      logo: "/dybys.ico",
       isImageLogo: true
     }
 
