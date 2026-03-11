@@ -14,6 +14,26 @@ export type Projet = {
 
 export const projets: Projet[] = [
   {
+    id: "moveon",
+    title: "MoveOn",
+    description:
+      "Une plateforme de covoiturage innovante optimisée pour les trajets quotidiens, offrant la gratuité sur les courtes distances et une rémunération garantie pour les conducteurs.",
+    longDesc:
+      "Réalisé en équipe lors de la 3ème année de BUT Informatique (SAE 5.01), MoveOn répond aux enjeux de mobilité urbaine et périurbaine[cite: 3]. Le projet se distingue par un modèle hybride : les trajets de moins de 30 km sont gratuits pour les passagers afin d'encourager l'usage régulier, tandis que les conducteurs sont systématiquement rémunérés pour assurer l'attractivité du service. L'application intègre également un système de détours optimisés inspiré des services de VTC pour offrir une flexibilité maximale lors des prises en charge[cite: 11, 12].",
+    image: "/moveon.png",
+    tech: ["Nest.js","Next.js", "TypeScript", "Docker", "CI/CD", "Digital Ocean","PostgreSQL"],
+    github: "https://github.com/neptune2k21/moveon-backend",
+    features: [
+      "Système tarifaire progressif et hybride",
+      "Gestion de détours optimisés (VTC style)",
+      "Architecture basée sur le Domain-Driven Design (DDD) et CQRS",
+      "Déploiement conteneurisé avec Docker",
+    ],
+    type: "web",
+    role: "Leader technique et développeur backend",
+    site: "https://moveons.app"
+  },
+  {
     id: "featured",
     title: "Quizzine",
     description:
@@ -68,25 +88,5 @@ export const projets: Projet[] = [
     type: "jeu",
     role: "Développeur backend",
   },
-  {
-    id: "dybys",
-    title: "Dybys",
-    description:
-      "Application mobile de réservation avec un réseau social intégré pour connecter clients et créateurs.",
-    longDesc:
-      "Dybys est une application mobile de réservation inspirée de Planity, mais enrichie d'une dimension sociale. Les utilisateurs peuvent non seulement réserver des services ou trajets interurbains, mais aussi interagir avec les créateurs et les entreprises via un fil d'actualité dédié.\n\nJ'ai participé au développement de Dybys en tant que développeur backend et data engineer. Mon rôle principal a été de mettre en place la conformité RGPD pour assurer la protection et la gestion sécurisée des données utilisateurs. J'ai également travaillé sur la récupération, la structuration et l'intégration d'un volume important de données afin de permettre à la plateforme de démarrer avec du contenu dès son lancement.\n\nSur le plan technique, j'ai conçu et implémenté une architecture asynchrone avec RabbitMQ pour gérer les traitements en arrière-plan (file d'attente, notifications, intégrations externes). Le backend a été développé avec Symfony, et j'ai utilisé Python pour la collecte et la transformation des données.",
-    image: "/dybys.jpeg",
-    tech: ["Symfony", "RabbitMQ", "Python", "PostgreSQL"],
-    github: null,
-    features: [
-      "Système de réservation avancé",
-      "Fil d'actualité et partage de contenu entre clients et créateurs",
-      "Conformité RGPD et gestion sécurisée des données",
-      "Traitements asynchrones via RabbitMQ",
-      "Backend robuste et scalable développé avec Symfony",
-    ],
-    type: "mobile",
-    role: "Développeur Backend & Data",
-    site: "https://dybys.com/",
-  },
+  
 ];
