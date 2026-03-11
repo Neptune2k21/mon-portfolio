@@ -116,7 +116,7 @@ export default function Home() {
                   </h2>
                   
                   <span className="inline-flex px-4 py-2 bg-zinc-900/90 dark:bg-zinc-100/90 text-zinc-50 dark:text-zinc-900 text-sm font-light tracking-wide rounded-full w-max border border-zinc-900 dark:border-zinc-100">
-                    Étudiant en BUT Informatique
+                    Futur étudiant en mastère en ingénierie logicielle
                   </span>
                 </div>
               </motion.div>
