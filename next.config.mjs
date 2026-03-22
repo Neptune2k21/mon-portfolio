@@ -8,18 +8,16 @@ try {
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  swcMinify: true,
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
+
   typescript: {
     ignoreBuildErrors: true,
   },
+
   images: {
     unoptimized: true,
   },
+
   experimental: {
-    turbo: {},
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
   },
@@ -28,9 +26,7 @@ const nextConfig = {
 mergeConfig(nextConfig, userConfig)
 
 function mergeConfig(nextConfig, userConfig) {
-  if (!userConfig) {
-    return
-  }
+  if (!userConfig) return
 
   for (const key in userConfig) {
     if (

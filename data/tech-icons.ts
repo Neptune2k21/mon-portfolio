@@ -39,7 +39,7 @@ export const techIconMap: Record<string, string> = {
   
   // Outils & Autres
   "Git": "logos:git-icon",
-  "API REST": "lucide:api",
+  "API REST": "logos:rest-api",
   "Figma": "logos:figma",
   "WPF": "mdi:microsoft-windows",
   "XAML": "mdi:microsoft-windows",
@@ -49,6 +49,13 @@ export const techIconMap: Record<string, string> = {
   "Notion de Graph": "lucide:network",
   "DDD": "lucide:box",
   "CQRS": "lucide:split",
+  "Automatisation": "lucide:repeat",
+  "Web Scraping": "lucide:spider-web",
+  "Data Processing": "lucide:database",
+  "Travail d'équipe": "lucide:users",
+  "Gestion du temps": "lucide:clock",
+  "Service client": "lucide:headphones",
+  "Adaptabilité": "lucide:refresh-ccw",
 };
 
 // Fonction helper pour obtenir l'icône d'une technologie

@@ -99,7 +99,7 @@ export default function Home() {
                   className="h-px bg-gradient-to-r from-transparent via-black/10 dark:via-white/10 to-transparent"
                 />
                 
-                <h1 className="font-light text-6xl md:text-7xl lg:text-8xl tracking-tight text-zinc-900 dark:text-zinc-50 leading-none">
+                <h1 className="hero-name font-light text-6xl md:text-7xl lg:text-8xl tracking-tight text-zinc-900 dark:text-zinc-50 leading-none">
                   Mamadou
                   <span className="text-4xl md:text-5xl lg:text-6xl font-light block text-right opacity-50 mt-2">
                     Cissé
@@ -107,7 +107,7 @@ export default function Home() {
                 </h1>
 
                 <div className="flex flex-col space-y-4 pt-4">
-                  <h2 className="text-2xl md:text-3xl lg:text-4xl font-light tracking-tight text-zinc-800 dark:text-zinc-100">
+                  <h2 className="hero-title text-2xl md:text-3xl lg:text-4xl font-light tracking-tight text-zinc-800 dark:text-zinc-100">
                     Développeur{" "}
                     <span className="relative inline-block">
                       <span className="relative z-10 font-normal text-zinc-900 dark:text-zinc-50">Logiciel & DevOps</span>
@@ -115,7 +115,7 @@ export default function Home() {
                     </span>
                   </h2>
                   
-                  <span className="inline-flex px-4 py-2 bg-zinc-900/90 dark:bg-zinc-100/90 text-zinc-50 dark:text-zinc-900 text-sm font-light tracking-wide rounded-full w-max border border-zinc-900 dark:border-zinc-100">
+                  <span className="hero-badge inline-flex px-4 py-2 bg-zinc-900/90 dark:bg-zinc-100/90 text-zinc-50 dark:text-zinc-900 text-sm font-light tracking-wide rounded-full w-max border border-zinc-900 dark:border-zinc-100">
                     Futur étudiant en mastère en ingénierie logicielle
                   </span>
                 </div>
