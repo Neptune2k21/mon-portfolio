@@ -10,6 +10,16 @@
     "postbuild": "next-sitemap",
     "perf:clean": "powershell -Command \"Remove-Item -Recurse -Force .next, node_modules, pnpm-lock.yaml; pnpm install; pnpm build\""
   },
+  "browserslist": [
+    "chrome >= 100",
+    "edge >= 100",
+    "firefox >= 100",
+    "safari >= 15.4",
+    "opera >= 100",
+    "ios >= 15.4",
+    "android >= 100",
+    "samsung >= 100"
+  ],
   "dependencies": {
     "@emotion/is-prop-valid": "latest",
     "@hookform/resolvers": "^3.9.1",

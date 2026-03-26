@@ -2,9 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { geist } from "@/lib/font"
 import "./globals.css"
-import "../styles/performance-optimizations.css"
 import Header from "@/components/header"
-import CustomCursor from "@/components/cursor"
 import { ThemeProvider } from "@/components/theme-provider"
 import ThemeAmbiance from "@/components/theme-ambiance"
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -144,6 +142,8 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
+        <link rel="preconnect" href="https://api.iconify.design" />
+        <link rel="dns-prefetch" href="https://api.iconify.design" />
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <StructuredData />
       </head>      

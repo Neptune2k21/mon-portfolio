@@ -17,18 +17,7 @@
   image-rendering: optimizeSpeed;
 }
 
-/* Optimisations pour favoriser les animations GPU */
-.hero-name,
-.hero-title,
-.hero-badge,
-.hero-desc,
-.hero-socials a,
-.hero-image-container,
-.alternance-banner {
-  will-change: transform, opacity;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
+
 
 /* Réduit les animations sur les appareils à faible puissance */
 .reduced-animation {
