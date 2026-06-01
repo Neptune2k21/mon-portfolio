@@ -481,7 +481,7 @@ export default function ContactPageClient() {
                   <div className="space-y-6">
                     {/* Téléphone */}
                     <a
-                      href="tel:+33667998877"
+                      href="tel:+33749712283"
                       className="flex items-start gap-4 group hover:translate-x-1 transition-transform"
                     >
                       <div className="w-10 h-10 rounded-lg bg-white/10 dark:bg-black/10 flex items-center justify-center flex-shrink-0">
@@ -489,7 +489,7 @@ export default function ContactPageClient() {
                       </div>
                       <div>
                         <p className="text-sm text-neutral-100/60 dark:text-neutral-900/60 mb-1 uppercase tracking-wide font-light">Téléphone</p>
-                        <p className="font-medium group-hover:underline">+33 6 67 99 88 77</p>
+                        <p className="font-medium group-hover:underline">+33 7 49 71 22 83</p>
                       </div>
                     </a>
 
