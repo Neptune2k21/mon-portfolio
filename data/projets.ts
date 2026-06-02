@@ -19,7 +19,7 @@ export const projets: Projet[] = [
     description:
       "Une plateforme de covoiturage innovante optimisée pour les trajets quotidiens, offrant la gratuité sur les courtes distances et une rémunération garantie pour les conducteurs.",
     longDesc:
-      "Réalisé en équipe lors de la 3ème année de BUT Informatique (SAE 5.01), MoveOn répond aux enjeux de mobilité urbaine et périurbaine[cite: 3]. Le projet se distingue par un modèle hybride : les trajets de moins de 30 km sont gratuits pour les passagers afin d'encourager l'usage régulier, tandis que les conducteurs sont systématiquement rémunérés pour assurer l'attractivité du service. L'application intègre également un système de détours optimisés inspiré des services de VTC pour offrir une flexibilité maximale lors des prises en charge[cite: 11, 12].",
+      "Réalisé en équipe lors de la 3ème année de BUT Informatique (SAE 5.01), MoveOn répond aux enjeux de mobilité urbaine et périurbaine. Le projet se distingue par un modèle hybride : les trajets de moins de 30 km sont gratuits pour les passagers afin d'encourager l'usage régulier, tandis que les conducteurs sont systématiquement rémunérés pour assurer l'attractivité du service. L'application intègre également un système de détours optimisés inspiré des services de VTC pour offrir une flexibilité maximale lors des prises en charge.",
     image: "/moveon.png",
     tech: ["Nest.js","Next.js", "TypeScript", "Docker", "CI/CD", "Digital Ocean","PostgreSQL"],
     github: "https://github.com/neptune2k21/moveon-backend",
@@ -32,6 +32,37 @@ export const projets: Projet[] = [
     type: "web",
     role: "Leader technique et développeur backend",
     site: "https://moveons.app"
+  },
+  {
+    id: "coordina",
+    title: "Coordina",
+    description:
+      "Une plateforme SaaS de collaboration et de gestion de projet, pensée autour des workspaces, des rôles utilisateurs et de tableaux Kanban par projet.",
+    longDesc:
+      "Coordina est une application fullstack en cours de développement, actuellement en phase pre-MVP. Le projet pose les bases techniques d’une plateforme collaborative moderne : authentification, workspaces multi-utilisateurs, invitations à usage unique, gestion de projets et tableaux Kanban personnalisables. Le backend repose sur une API ASP.NET Core modulaire avec PostgreSQL et Entity Framework Core, tandis que le frontend React propose un shell SaaS authentifié avec onboarding, gestion des workspaces, projets, membres et boards. Le projet met aussi l’accent sur la maintenabilité avec Docker, migrations EF Core, documentation OpenAPI/Scalar, tests d’intégration, tests frontend, Playwright et une quality gate CI.",
+    image: "/coordina.png",
+    tech: [
+      ".NET 9",
+      "ASP.NET Core",
+      "C#",
+      "React",
+      "TypeScript",
+      "PostgreSQL",
+      "Entity Framework Core",
+      "Tailwind CSS",
+      "Docker",
+      "GitHub Actions"
+    ],
+    github: "https://github.com/Neptune2k21/Coordina",
+    features: [
+      "Workspaces multi-utilisateurs",
+      "Invitations à usage unique",
+      "Gestion de projets et tableaux Kanban personnalisables",
+      "API RESTful avec documentation OpenAPI/Scalar",
+      "Tests d’intégration backend et tests frontend avec Playwright",
+    ],
+    type: "web",
+    role: "Créateur et développeur fullstack"
   },
   {
     id: "featured",

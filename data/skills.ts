@@ -45,7 +45,7 @@ export const currentSkills: (Skill & { category: SkillCategory })[] = [
         category: "Logiciels"
     },
     {
-        name: "PhP",
+        name: "PHP",
         icon: "logos:php",
         level: 65,
         description: "Langage de programmation",
@@ -94,12 +94,12 @@ export const currentSkills: (Skill & { category: SkillCategory })[] = [
         category: "Frontend"
     },
     {
-        name: "Expo",
-        icon: "logos:expo-icon",
+        name: "C#",
+        icon: "devicon:csharp",
         level: 70,
-        description: "Framework et outil pour apps React Native",
-        category: "Frontend"
-    },
+        description: "Langage de programmation",
+        category: "Logiciels"
+    }
 
 ];
 

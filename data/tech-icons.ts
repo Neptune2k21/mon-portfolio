@@ -16,11 +16,12 @@ export const techIconMap: Record<string, string> = {
   "Symfony": "logos:symfony",
   "PHP": "logos:php",
   "PhP": "logos:php",
+  ".NET 9": "skill-icons:dotnet",
   
   // Langages
   "TypeScript": "logos:typescript-icon",
   "JavaScript": "logos:javascript",
-  "C#": "logos:csharp",
+  "C#": "devicon:csharp",
   "Python": "logos:python",
   
   // Bases de données
@@ -32,10 +33,11 @@ export const techIconMap: Record<string, string> = {
   // DevOps & Cloud
   "Docker": "logos:docker-icon",
   "CI/CD": "lucide:git-merge",
-  "Digital Ocean": "logos:digitalocean-icon",
+  "Digital Ocean": "devicon:digitalocean",
   "DigitalOcean": "logos:digitalocean-icon",
   "AWS": "logos:aws",
   "Kubernetes": "logos:kubernetes",
+  "GitHub Actions": "devicon:githubactions",
   
   // Outils & Autres
   "Git": "logos:git-icon",
