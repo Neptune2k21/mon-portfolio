@@ -6,7 +6,6 @@ import Header from "@/components/header"
 import { ThemeProvider } from "@/components/theme-provider"
 import ThemeAmbiance from "@/components/theme-ambiance"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import PerformanceOptimizer from "@/components/performance-optimizer"
 import { Analytics } from "@vercel/analytics/next"
 import StructuredData from "@/components/structured-data"
 
@@ -142,9 +141,7 @@ export default function RootLayout({
   return (
     <html lang="fr" suppressHydrationWarning>
       <head>
-        <link rel="preconnect" href="https://api.iconify.design" />
-        <link rel="dns-prefetch" href="https://api.iconify.design" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/dybys.ico" sizes="any" />
         <StructuredData />
       </head>      
       <body className={`${geist.className} auto-optimize`}>
@@ -154,7 +151,6 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange={true}
         >
-          <PerformanceOptimizer />
           <ThemeAmbiance />
           <Header />
           {children}
