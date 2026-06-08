@@ -135,6 +135,8 @@ export default function ExperiencesPageClient() {
                       alt={projet.title}
                       fill
                       priority={index === 0}
+                      quality={72}
+                      sizes="(min-width: 1024px) 50vw, 100vw"
                       className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-black/10 to-transparent" />
@@ -438,6 +440,7 @@ export default function ExperiencesPageClient() {
                   src={selectedProject.image}
                   alt={selectedProject.title}
                   fill
+                  quality={72}
                   className="object-cover"
                   sizes="(min-width: 1024px) 896px, 100vw"
                 />
