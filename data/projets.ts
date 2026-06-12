@@ -43,12 +43,10 @@ export const projets: Projet[] = [
     image: "/coordina.png",
     tech: [
       ".NET 9",
-      "ASP.NET Core",
       "C#",
-      "React",
-      "TypeScript",
       "PostgreSQL",
       "Entity Framework Core",
+      "React",
       "Tailwind CSS",
       "Docker",
       "GitHub Actions"
@@ -91,7 +89,7 @@ export const projets: Projet[] = [
     longDesc:
       "Le projet Cookie Clicker est une application WPF interactive où les joueurs cliquent sur un cookie géant pour produire des cookies virtuels. Le but est de produire le plus de cookies possible en achetant des améliorations et des automates qui augmentent le nombre de cookies générés par seconde.",
     image: "/cookieClicker.png",
-    tech: ["C#", "WPF", "XAML", "SQLite"],
+    tech: ["C#", "WPF", "XAML", "SQL Server"],
     github: "https://github.com/4keezix/SAE_DEV_CookieClicker",
     features: [
       "Interface personnalisable",
