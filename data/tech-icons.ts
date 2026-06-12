@@ -29,22 +29,25 @@ export const techIconMap: Record<string, string> = {
   "MongoDb": "logos:mongodb-icon",
   "MongoDB": "logos:mongodb-icon",
   "SQLite": "simple-icons:sqlite",
+  "SQL Server": "devicon:microsoftsqlserver",
+  "Entity Framework Core": "devicon:entityframeworkcore",
   
   // DevOps & Cloud
   "Docker": "logos:docker-icon",
-  "CI/CD": "lucide:git-merge",
+  "CI/CD": "devicon:githubactions",
   "Digital Ocean": "devicon:digitalocean",
   "DigitalOcean": "logos:digitalocean-icon",
   "AWS": "logos:aws",
   "Kubernetes": "logos:kubernetes",
   "GitHub Actions": "devicon:githubactions",
+  "Azure DevOps": "devicon:azuredevops",
   
   // Outils & Autres
   "Git": "logos:git-icon",
-  "API REST": "logos:rest-api",
+  "API REST": "dashicons:rest-api",
   "Figma": "logos:figma",
-  "WPF": "mdi:microsoft-windows",
-  "XAML": "mdi:microsoft-windows",
+  "WPF": "fa7-brands:wpforms",
+  "XAML": "material-icon-theme:xaml",
   
   // Concepts & Méthodologies
   "Algorithmes": "lucide:binary",
@@ -52,7 +55,7 @@ export const techIconMap: Record<string, string> = {
   "DDD": "lucide:box",
   "CQRS": "lucide:split",
   "Automatisation": "lucide:repeat",
-  "Web Scraping": "lucide:spider-web",
+  "Web Scraping": "material-icon-theme:playwright",
   "Data Processing": "lucide:database",
   "Travail d'équipe": "lucide:users",
   "Gestion du temps": "lucide:clock",
