@@ -117,5 +117,23 @@ export const projets: Projet[] = [
     type: "jeu",
     role: "Développeur backend",
   },
+  {
+    id: "portfolio",
+    title: "Portfolio",
+    description:
+      "Le site que vous êtes en train de visiter, construit avec Next.js et TypeScript pour présenter mes projets et compétences en développement web.",
+    longDesc:
+      "Ce portfolio a été créé pour présenter mes réalisations et mes compétences en développement web. Il inclut une section dédiée à mes projets, ainsi qu'une description détaillée de chaque projet.",
+    image: "/miniature.png",
+    tech: ["TypeScript", "React", "Tailwind CSS"],
+    github: "https://github.com/Neptune2k21/mon-portfolio",
+    features: [
+      "Design responsive",
+      "Animations CSS",
+      "Intégration API",
+    ],
+    type: "web",
+    role: "Développeur frontend"
+  }
   
 ];
